@@ -1,5 +1,11 @@
 package fn
 
+func RunForever() {
+	for {
+		select {}
+	}
+}
+
 func Map[T any, S any](items []T, convert func(T) S) []S {
 	results := make([]S, len(items))
 	for i, item := range items {
