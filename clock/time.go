@@ -3,27 +3,34 @@ package clock
 import "time"
 
 var currentTimezone string = "Asia/Singapore"
+var timezone *time.Location = nil
 
 const (
 	standardFormat  string = "2006-01-02 15:04:05"
 	timestampFormat string = "060102150405"
 )
 
-func SetTimezone(timezone string) {
-	_, err := time.LoadLocation(currentTimezone)
+func SetTimezone(newTimezone string) {
+	tz, err := time.LoadLocation(newTimezone)
 	if err == nil {
-		currentTimezone = timezone
+		currentTimezone = newTimezone
+		timezone = tz
 	}
 }
 
+func GetTimezone() *time.Location {
+	if timezone == nil {
+		timezone, _ = time.LoadLocation(currentTimezone)
+	}
+	return timezone
+}
+
 func TimeNow() time.Time {
-	timezone, _ := time.LoadLocation(currentTimezone)
-	return time.Now().In(timezone)
+	return time.Now().In(GetTimezone())
 }
 
 func ParseTime(datetime string) (time.Time, error) {
-	timezone, _ := time.LoadLocation(currentTimezone)
-	return time.ParseInLocation(standardFormat, datetime, timezone)
+	return time.ParseInLocation(standardFormat, datetime, GetTimezone())
 }
 
 func DateTimeNow() string {
