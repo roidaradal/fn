@@ -19,6 +19,12 @@ func CleanSplit(text string, sep string) []string {
 	return parts
 }
 
+func SpaceSplit(text string) []string {
+	parts := strings.Fields(strings.TrimSpace(text))
+	parts = Map(parts, strings.TrimSpace)
+	return parts
+}
+
 func NullIfBlank(item string) *string {
 	item = strings.TrimSpace(item)
 	if item == "" {
