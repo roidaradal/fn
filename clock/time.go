@@ -55,6 +55,14 @@ func DateTimeNowWithExpiry(duration time.Duration) (string, string) {
 	return StandardFormat(now), StandardFormat(expiry)
 }
 
+func ExtendTime(datetime string, duration time.Duration) string {
+	t, err := ParseTime(datetime)
+	if err != nil {
+		return datetime
+	}
+	return StandardFormat(t.Add(duration))
+}
+
 func CheckIfExpired(expiry string) bool {
 	limit, err := ParseTime(expiry)
 	if err != nil {
