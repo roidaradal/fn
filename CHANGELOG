@@ -1,3 +1,7 @@
+v0.1.9 - Add structs package 
+    x Commit: 2025-03-26 14:41
+    x Move SetFieldValue from check to structs 
+    x Move StructToMap from fn to structs
 v0.1.8 - Add check package 
     x Commit: 2025-03-26 14:36
     x Add check package
