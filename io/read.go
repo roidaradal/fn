@@ -38,14 +38,30 @@ func ReadCSVFile(path string) ([][]string, error) {
 }
 
 func LoadJSONObject[T any](path string) (*T, error) {
-	var obj T
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-	err = json.Unmarshal(data, &obj)
+	obj, err := loadJSON[T](path)
 	if err != nil {
 		return nil, err
 	}
 	return &obj, nil
+}
+
+func LoadJSONList[T any](path string) ([]T, error) {
+	return loadJSON[[]T](path)
+}
+
+func LoadJSONMap[T any](path string) (map[string]T, error) {
+	return loadJSON[map[string]T](path)
+}
+
+func loadJSON[T any](path string) (T, error) {
+	var obj T
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return obj, err
+	}
+	err = json.Unmarshal(data, &obj)
+	if err != nil {
+		return obj, err
+	}
+	return obj, nil
 }
