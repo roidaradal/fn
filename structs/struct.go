@@ -7,6 +7,13 @@ import (
 	"github.com/roidaradal/fn/check"
 )
 
+func GetFieldValue(x any, field string) any {
+	if !check.IsStructPointer(x) {
+		return nil
+	}
+	return reflect.ValueOf(x).Elem().FieldByName(field).Interface()
+}
+
 func SetFieldValue(x any, field string, value any) {
 	if !check.IsStructPointer(x) {
 		return

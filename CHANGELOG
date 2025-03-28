@@ -1,3 +1,6 @@
+v0.1.10 - Add GetFieldValue 
+    x Commit: 2025-03-28 15:36
+    x Add structs.GetFieldValue
 v0.1.9 - Add structs package 
     x Commit: 2025-03-26 14:41
     x Move SetFieldValue from check to structs 
