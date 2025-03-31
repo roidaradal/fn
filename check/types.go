@@ -34,3 +34,7 @@ func IsStructPointer(x any) bool {
 	}
 	return IsStruct(Deref(x))
 }
+
+func IsZero(x any) bool {
+	return reflect.ValueOf(x).IsZero()
+}

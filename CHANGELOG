@@ -1,3 +1,6 @@
+v0.1.11 - Add IsZero 
+    x Commit: 2025-03-31 16:43
+    x Add check.IsZero
 v0.1.10 - Add GetFieldValue 
     x Commit: 2025-03-28 15:36
     x Add structs.GetFieldValue
