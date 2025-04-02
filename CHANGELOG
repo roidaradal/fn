@@ -1,3 +1,6 @@
+v0.1.12 - Add TimeSince
+    x Commit: 2025-04-02 10:27 
+    x Add clock.TimeSince
 v0.1.11 - Add IsZero 
     x Commit: 2025-03-31 16:43
     x Add check.IsZero

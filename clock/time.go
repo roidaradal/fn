@@ -1,6 +1,9 @@
 package clock
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 var currentTimezone string = "Asia/Singapore"
 var timezone *time.Location = nil
@@ -74,4 +77,13 @@ func CheckIfExpired(expiry string) bool {
 func Sleep(pause time.Duration, start time.Time) {
 	sleep := pause - TimeNow().Sub(start)
 	time.Sleep(sleep)
+}
+
+func TimeSince(datetime string) (string, error) {
+	t, err := ParseTime(datetime)
+	if err != nil {
+		return "", err
+	}
+	duration := TimeNow().Sub(t)
+	return fmt.Sprintf("%v", duration), nil
 }
