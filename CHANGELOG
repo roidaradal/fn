@@ -1,3 +1,7 @@
+v0.1.13 - DurationSince     
+    x Commit: 2025-04-02 10:44
+    x Change TimeSince to DurationSince 
+    x Add parameter for rounding
 v0.1.12 - Add TimeSince
     x Commit: 2025-04-02 10:27 
     x Add clock.TimeSince

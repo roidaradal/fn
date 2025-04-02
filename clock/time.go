@@ -79,11 +79,12 @@ func Sleep(pause time.Duration, start time.Time) {
 	time.Sleep(sleep)
 }
 
-func TimeSince(datetime string) (string, error) {
+func DurationSince(datetime string, round time.Duration) (string, error) {
 	t, err := ParseTime(datetime)
 	if err != nil {
 		return "", err
 	}
 	duration := TimeNow().Sub(t)
+	duration = duration.Round(round)
 	return fmt.Sprintf("%v", duration), nil
 }
