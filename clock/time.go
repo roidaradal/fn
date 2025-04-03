@@ -2,6 +2,7 @@ package clock
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -13,11 +14,6 @@ const (
 	standardFormat  string = "2006-01-02 15:04:05"
 	timestampFormat string = "060102150405"
 )
-
-func IsValidDate(date string) bool {
-	_, err := time.Parse(dateFormat, date)
-	return err == nil
-}
 
 func SetTimezone(newTimezone string) {
 	tz, err := time.LoadLocation(newTimezone)
@@ -93,4 +89,21 @@ func DurationSince(datetime string, round time.Duration) (string, error) {
 	duration := TimeNow().Sub(t)
 	duration = duration.Round(round)
 	return fmt.Sprintf("%v", duration), nil
+}
+
+func IsValidDate(date string) bool {
+	date = strings.TrimSpace(date)
+	if date == "" {
+		return false
+	}
+	_, err := time.Parse(dateFormat, date)
+	return err == nil
+}
+
+func DateStart(date string) string {
+	return fmt.Sprintf("%s 00:00:00", date)
+}
+
+func DateEnd(date string) string {
+	return fmt.Sprintf("%s 23:59:59", date)
 }
