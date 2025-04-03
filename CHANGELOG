@@ -1,3 +1,6 @@
+v0.1.14 - IsValidDate
+    x Commit: 2025-04-03 08:05
+    x Add clock.IsValidDate
 v0.1.13 - DurationSince     
     x Commit: 2025-04-02 10:44
     x Change TimeSince to DurationSince 

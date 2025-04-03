@@ -9,9 +9,15 @@ var currentTimezone string = "Asia/Singapore"
 var timezone *time.Location = nil
 
 const (
+	dateFormat      string = "2006-01-02"
 	standardFormat  string = "2006-01-02 15:04:05"
 	timestampFormat string = "060102150405"
 )
+
+func IsValidDate(date string) bool {
+	_, err := time.Parse(dateFormat, date)
+	return err == nil
+}
 
 func SetTimezone(newTimezone string) {
 	tz, err := time.LoadLocation(newTimezone)
