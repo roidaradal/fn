@@ -1,7 +1,6 @@
 package fn
 
 import (
-	"strconv"
 	"strings"
 )
 
@@ -54,22 +53,4 @@ func NullToBlank(item *string) string {
 		return "-"
 	}
 	return item2
-}
-
-func ParseInt(value string) int {
-	number, err := strconv.Atoi(strings.TrimSpace(value))
-	if err == nil {
-		return number
-	} else {
-		return 0
-	}
-}
-
-func ParseFloat(value string) float64 {
-	number, err := strconv.ParseFloat(strings.TrimSpace(value), 64)
-	if err == nil {
-		return number
-	} else {
-		return 0
-	}
 }

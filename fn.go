@@ -14,6 +14,14 @@ func Map[T any, S any](items []T, convert func(T) S) []S {
 	return results
 }
 
+func MapIndex[T any, S any](items []T, convert func(int, T) S) []S {
+	results := make([]S, len(items))
+	for i, item := range items {
+		results[i] = convert(i, item)
+	}
+	return results
+}
+
 func Filter[T any](items []T, keep func(T) bool) []T {
 	results := make([]T, 0, len(items))
 	for _, item := range items {
@@ -33,20 +41,10 @@ func Lookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[K]V
 	return lookup
 }
 
-func All[T any](items []T, ok func(T) bool) bool {
-	for _, item := range items {
-		if !ok(item) {
-			return false
-		}
+func Translate[K comparable, V any](items []K, mask map[K]V) []V {
+	results := make([]V, len(items))
+	for i, item := range items {
+		results[i] = mask[item]
 	}
-	return true
-}
-
-func Any[T any](items []T, ok func(T) bool) bool {
-	for _, item := range items {
-		if ok(item) {
-			return true
-		}
-	}
-	return false
+	return results
 }
