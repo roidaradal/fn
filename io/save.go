@@ -6,6 +6,22 @@ import (
 	"strings"
 )
 
+func StringifyJSON[T any](item T) (string, error) {
+	data, err := stringifyJSON(item, 0)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
+
+func StringifyIndentedJSON[T any](item T) (string, error) {
+	data, err := stringifyJSON(item, 1)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
+
 func SaveJSONList[T any](path string, items []T) error {
 	return saveJSON(path, items, 0)
 }
@@ -30,14 +46,16 @@ func SaveIndentedJSONObject[T any](path string, obj T) error {
 	return saveJSON(path, obj, 1)
 }
 
-func saveJSON[T any](path string, items T, indent int) error {
-	var data []byte
-	var err error
+func stringifyJSON[T any](item T, indent int) ([]byte, error) {
 	if indent == 0 {
-		data, err = json.Marshal(items)
+		return json.Marshal(item)
 	} else {
-		data, err = json.MarshalIndent(items, "", strings.Repeat("  ", indent))
+		return json.MarshalIndent(item, "", strings.Repeat("  ", indent))
 	}
+}
+
+func saveJSON[T any](path string, item T, indent int) error {
+	data, err := stringifyJSON(item, indent)
 	if err != nil {
 		return err
 	}
