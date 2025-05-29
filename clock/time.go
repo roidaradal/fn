@@ -42,8 +42,20 @@ func DateTimeNow() string {
 	return StandardFormat(TimeNow())
 }
 
+func DateNow() string {
+	return DateFormat(TimeNow())
+}
+
+func MidnightToday() string {
+	return DateNow() + " 00:00:00"
+}
+
 func TimestampNow() string {
 	return TimestampFormat(TimeNow())
+}
+
+func DateFormat(t time.Time) string {
+	return t.Format(dateFormat)
 }
 
 func StandardFormat(t time.Time) string {
