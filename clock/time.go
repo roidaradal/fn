@@ -11,6 +11,8 @@ var timezone *time.Location = nil
 
 const (
 	dateFormat      string = "2006-01-02"
+	timeFormat      string = "15:04:05"
+	hourMinsFormat  string = "15:04"
 	standardFormat  string = "2006-01-02 15:04:05"
 	timestampFormat string = "060102150405"
 )
@@ -50,6 +52,14 @@ func MidnightToday() string {
 	return DateNow() + " 00:00:00"
 }
 
+func IsMidnight() bool {
+	return HourMinNow() == "00:00"
+}
+
+func HourMinNow() string {
+	return TimeNow().Format(hourMinsFormat)
+}
+
 func TimestampNow() string {
 	return TimestampFormat(TimeNow())
 }
@@ -64,6 +74,10 @@ func StandardFormat(t time.Time) string {
 
 func TimestampFormat(t time.Time) string {
 	return t.Format(timestampFormat)
+}
+
+func TimeFormat(t time.Time) string {
+	return t.Format(timeFormat)
 }
 
 func DateTimeNowWithExpiry(duration time.Duration) (string, string) {
