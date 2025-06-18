@@ -5,12 +5,25 @@ import (
 	"slices"
 )
 
+type Entry[K comparable, V any] struct {
+	Key   K
+	Value V
+}
+
 func MapKeys[K comparable, V any](items map[K]V) []K {
 	return slices.Collect(maps.Keys(items))
 }
 
 func MapValues[K comparable, V any](items map[K]V) []V {
 	return slices.Collect(maps.Values(items))
+}
+
+func MapEntries[K comparable, V any](items map[K]V) []Entry[K, V] {
+	entries := make([]Entry[K, V], 0, len(items))
+	for k, v := range items {
+		entries = append(entries, Entry[K, V]{k, v})
+	}
+	return entries
 }
 
 func HasKey[K comparable, V any](items map[K]V, key K) bool {
