@@ -12,6 +12,14 @@ func NewSet[T comparable]() *Set[T] {
 	}
 }
 
+func SetFrom[T comparable](items []T) *Set[T] {
+	s := NewSet[T]()
+	for _, item := range items {
+		s.Add(item)
+	}
+	return s
+}
+
 func (s *Set[T]) Add(item T) {
 	s.items[item] = true
 }

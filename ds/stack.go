@@ -10,6 +10,14 @@ func NewStack[T any]() *Stack[T] {
 	}
 }
 
+func StackFrom[T any](items []T) *Stack[T] {
+	s := NewStack[T]()
+	for _, item := range items {
+		s.Push(item)
+	}
+	return s
+}
+
 func (s *Stack[T]) Push(item T) {
 	s.items = append(s.items, item)
 }

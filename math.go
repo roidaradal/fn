@@ -29,3 +29,12 @@ func ParseFloat(value string) float64 {
 		return 0
 	}
 }
+
+func ParseBinary(value string) int {
+	number, err := strconv.ParseInt(strings.TrimSpace(value), 2, 64)
+	if err == nil {
+		return int(number)
+	} else {
+		return 0
+	}
+}

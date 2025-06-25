@@ -10,6 +10,14 @@ func NewQueue[T any]() *Queue[T] {
 	}
 }
 
+func QueueFrom[T any](items []T) *Queue[T] {
+	q := NewQueue[T]()
+	for _, item := range items {
+		q.Enqueue(item)
+	}
+	return q
+}
+
 func (q *Queue[T]) Enqueue(item T) {
 	q.items = append(q.items, item)
 }
