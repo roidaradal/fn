@@ -1,3 +1,7 @@
+v0.2.6 - IsEmpty & Deref    
+    x Commit: 2025-08-28 16:17
+    x IsEmptyString
+    x Deref
 v0.2.5 - Ternary Operator
     x Commit: 2025-06-25 08:56
     x Ternary Operator 
