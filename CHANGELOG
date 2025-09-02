@@ -1,3 +1,6 @@
+v0.2.7 - structs.GetFieldString 
+    x Commit: 2025-09-02 09:43 
+    x GetFieldString
 v0.2.6 - IsEmpty & Deref    
     x Commit: 2025-08-28 16:17
     x IsEmptyString

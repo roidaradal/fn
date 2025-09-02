@@ -2,6 +2,7 @@ package structs
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 
 	"github.com/roidaradal/fn/check"
@@ -12,6 +13,11 @@ func GetFieldValue(x any, field string) any {
 		return nil
 	}
 	return reflect.ValueOf(x).Elem().FieldByName(field).Interface()
+}
+
+func GetFieldString(x any, field string) string {
+	value := GetFieldValue(x, field)
+	return fmt.Sprintf("%v", value)
 }
 
 func SetFieldValue(x any, field string, value any) {
