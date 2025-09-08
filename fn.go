@@ -32,6 +32,16 @@ func Filter[T any](items []T, keep func(T) bool) []T {
 	return results
 }
 
+func MapFilter[K comparable, V any](items map[K]V, keep func(K, V) bool) map[K]V {
+	items2 := make(map[K]V)
+	for k, v := range items {
+		if keep(k, v) {
+			items2[k] = v
+		}
+	}
+	return items2
+}
+
 func Lookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[K]V {
 	lookup := make(map[K]V, len(items))
 	for _, item := range items {
