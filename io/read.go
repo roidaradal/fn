@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/check"
+	"github.com/roidaradal/fn/str"
 )
 
 func ReadTextFile(path string) (string, error) {
@@ -15,13 +17,21 @@ func ReadTextFile(path string) (string, error) {
 	return string(text), nil
 }
 
-func ReadTextLines(path string) ([]string, error) {
+func ReadAllTextLines(path string) ([]string, error) {
 	text, err := ReadTextFile(path)
 	if err != nil {
 		return nil, err
 	}
-	lines := fn.CleanSplit(text, "\n")
-	lines = fn.Filter(lines, fn.IsNotBlankString)
+	lines := str.CleanSplit(text, "\n")
+	return lines, nil
+}
+
+func ReadTextLines(path string) ([]string, error) {
+	lines, err := ReadAllTextLines(path)
+	if err != nil {
+		return nil, err
+	}
+	lines = fn.Filter(lines, check.IsNotBlankString)
 	return lines, nil
 }
 
@@ -32,7 +42,7 @@ func ReadCSVFile(path string) ([][]string, error) {
 	}
 	rows := make([][]string, len(lines))
 	for i, line := range lines {
-		rows[i] = fn.CleanSplit(line, ",")
+		rows[i] = str.CleanSplit(line, ",")
 	}
 	return rows, nil
 }

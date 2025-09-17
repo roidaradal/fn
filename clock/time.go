@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	_ "time/tzdata"
 )
 
 var currentTimezone string = "Asia/Singapore"

@@ -41,3 +41,7 @@ func (s Stack[T]) Len() int {
 func (s Stack[T]) IsEmpty() bool {
 	return len(s.items) == 0
 }
+
+func (s Stack[T]) Items() []T {
+	return s.items
+}

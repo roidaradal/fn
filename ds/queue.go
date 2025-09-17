@@ -39,3 +39,7 @@ func (q Queue[T]) Len() int {
 func (q Queue[T]) IsEmpty() bool {
 	return len(q.items) == 0
 }
+
+func (q Queue[T]) Items() []T {
+	return q.items
+}

@@ -1,4 +1,4 @@
-package db
+package net
 
 import (
 	"database/sql"
@@ -7,7 +7,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-type ConnParams struct {
+type SQLConnParams struct {
 	Host     string
 	Port     string
 	Username string
@@ -15,7 +15,7 @@ type ConnParams struct {
 	Database string
 }
 
-func NewConnection(p *ConnParams) (*sql.DB, error) {
+func NewSQLConnection(p *SQLConnParams) (*sql.DB, error) {
 	dbAddr := fmt.Sprintf("%s:%s", p.Host, p.Port)
 	dbCfg := mysql.Config{
 		User:                 p.Username,

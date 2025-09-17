@@ -1,4 +1,4 @@
-package check
+package dyn
 
 import (
 	"fmt"
@@ -7,17 +7,17 @@ import (
 
 func TypeOf(x any) string {
 	if IsPointer(x) {
-		return TypeOf(Deref(x))
+		return TypeOf(deref(x))
 	}
 	return reflect.TypeOf(x).Name()
 }
 
-func Deref(x any) any {
-	return reflect.ValueOf(x).Elem().Interface()
-}
-
 func AddressOf(x any) string {
 	return fmt.Sprintf("%p", x)
+}
+
+func IsZero(x any) bool {
+	return reflect.ValueOf(x).IsZero()
 }
 
 func IsPointer(x any) bool {
@@ -32,9 +32,9 @@ func IsStructPointer(x any) bool {
 	if !IsPointer(x) {
 		return false
 	}
-	return IsStruct(Deref(x))
+	return IsStruct(deref(x))
 }
 
-func IsZero(x any) bool {
-	return reflect.ValueOf(x).IsZero()
+func deref(x any) any {
+	return reflect.ValueOf(x).Elem().Interface()
 }

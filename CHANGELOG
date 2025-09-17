@@ -1,3 +1,20 @@
+v0.3.0 - Restructure 
+    x Commit: 2025-09-17 10:25
+    x Main package fn
+        x Functional programming 
+        x Quality-of-life
+    x Subpackages:
+        x check: checking and validation
+        x clock: time
+        x conv:  conversion 
+        x dict:  maps 
+        x ds:    data structurs 
+        x dyn:   reflect 
+        x hash:  passwords
+        x io:    read/write
+        x list:  slice functions
+        x net:   db connection, fetch
+        x str:   string functions
 v0.2.9 - Ref 
     x Commit: 2025-09-11 12:56
     x Ref

@@ -1,40 +1,27 @@
-package fn
+package conv
 
 import (
 	"strconv"
 	"strings"
+
+	"github.com/roidaradal/fn"
 )
 
 func Abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
+	return fn.Ternary(x < 0, -x, x)
 }
 
 func ParseInt(value string) int {
 	number, err := strconv.Atoi(strings.TrimSpace(value))
-	if err == nil {
-		return number
-	} else {
-		return 0
-	}
+	return fn.Ternary(err == nil, number, 0)
 }
 
 func ParseFloat(value string) float64 {
 	number, err := strconv.ParseFloat(strings.TrimSpace(value), 64)
-	if err == nil {
-		return number
-	} else {
-		return 0
-	}
+	return fn.Ternary(err == nil, number, 0)
 }
 
 func ParseBinary(value string) int {
 	number, err := strconv.ParseInt(strings.TrimSpace(value), 2, 64)
-	if err == nil {
-		return int(number)
-	} else {
-		return 0
-	}
+	return fn.Ternary(err == nil, int(number), 0)
 }

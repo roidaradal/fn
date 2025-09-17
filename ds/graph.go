@@ -1,6 +1,6 @@
 package ds
 
-import "github.com/roidaradal/fn"
+import "github.com/roidaradal/fn/dict"
 
 type VertexPair = [2]string
 
@@ -44,7 +44,7 @@ func (g *Graph) AddEdge(v1, v2 string) {
 
 func (g *Graph) InitEdges() {
 	for _, v := range g.Vertices() {
-		if !fn.HasKey(g.edges, v) {
+		if !dict.HasKey(g.edges, v) {
 			g.edges[v] = make([]string, 0)
 		}
 	}

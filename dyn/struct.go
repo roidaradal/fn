@@ -1,15 +1,13 @@
-package structs
+package dyn
 
 import (
 	"encoding/json"
 	"fmt"
 	"reflect"
-
-	"github.com/roidaradal/fn/check"
 )
 
 func GetFieldValue(x any, field string) any {
-	if !check.IsStructPointer(x) {
+	if !IsStructPointer(x) {
 		return nil
 	}
 	return reflect.ValueOf(x).Elem().FieldByName(field).Interface()
@@ -21,13 +19,13 @@ func GetFieldString(x any, field string) string {
 }
 
 func SetFieldValue(x any, field string, value any) {
-	if !check.IsStructPointer(x) {
+	if !IsStructPointer(x) {
 		return
 	}
 	reflect.ValueOf(x).Elem().FieldByName(field).Set(reflect.ValueOf(value))
 }
 
-func ToMap[T any, V any](item *T) (map[string]V, error) {
+func StructToMap[T any, V any](item *T) (map[string]V, error) {
 	var output map[string]V
 	data, err := json.Marshal(item)
 	if err != nil {
