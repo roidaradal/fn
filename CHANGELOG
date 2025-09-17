@@ -1,3 +1,8 @@
+v0.3.1 - List & Map Lookup
+    x Commit: 2025-09-17 16:31
+    x Check if SQLConnParams is nil
+    x List, ListLookup, MapLookup
+    x IDCodeLookup, IDLookup, CodeLookup
 v0.3.0 - Restructure 
     x Commit: 2025-09-17 10:25
     x Main package fn

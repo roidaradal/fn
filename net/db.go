@@ -2,6 +2,7 @@ package net
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/go-sql-driver/mysql"
@@ -16,6 +17,9 @@ type SQLConnParams struct {
 }
 
 func NewSQLConnection(p *SQLConnParams) (*sql.DB, error) {
+	if p == nil {
+		return nil, errors.New("sql connection params are not set")
+	}
 	dbAddr := fmt.Sprintf("%s:%s", p.Host, p.Port)
 	dbCfg := mysql.Config{
 		User:                 p.Username,
