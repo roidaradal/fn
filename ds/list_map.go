@@ -31,7 +31,7 @@ type ListLookup[T codeable, L any] struct {
 	Count  int
 }
 
-type MapLookup[T codeable, L any] struct {
+type MapLookup[T any, L any] struct {
 	Items  map[string]T
 	Lookup map[string]L
 	Count  int
@@ -55,7 +55,7 @@ func NewListLookup[T codeable, L any](items []T) *ListLookup[T, L] {
 	}
 }
 
-func NewMapLookup[T codeable, L any](items map[string]T) *MapLookup[T, L] {
+func NewMapLookup[T any, L any](items map[string]T) *MapLookup[T, L] {
 	if items == nil {
 		items = make(map[string]T)
 	}

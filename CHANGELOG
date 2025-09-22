@@ -1,3 +1,6 @@
+v0.3.2 - Edit MapLookup 
+    x Commit: 2025-09-22 11:08
+    x Change MapLookup from [T codeable] to [T any]
 v0.3.1 - List & Map Lookup
     x Commit: 2025-09-17 16:31
     x Check if SQLConnParams is nil
