@@ -82,6 +82,14 @@ func NewCodeLookup[T codeable](items []T) CodeLookup[T] {
 	return codeLookup
 }
 
+func NewIDCodeLookup[T Identifiable](items []T) IDCodeLookup {
+	idCodeLookup := make(IDCodeLookup)
+	for _, item := range items {
+		idCodeLookup[item.GetID()] = item.GetCode()
+	}
+	return idCodeLookup
+}
+
 func IDToCodeLookup[T Identifiable](idLookup IDLookup[T], validCodes *Set[string]) CodeLookup[T] {
 	codeLookup := make(CodeLookup[T])
 	for _, item := range idLookup {

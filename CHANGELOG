@@ -1,3 +1,6 @@
+v0.3.3 - NewIDCodeLookup
+    x Commit: 2025-09-24 11:01
+    x NewIDCodeLookup
 v0.3.2 - Edit MapLookup 
     x Commit: 2025-09-22 11:08
     x Change MapLookup from [T codeable] to [T any]
