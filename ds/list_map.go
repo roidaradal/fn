@@ -17,6 +17,7 @@ type (
 	IDCodeLookup           map[uint]string
 	IDLookup[T idable]     map[uint]T
 	CodeLookup[T codeable] map[string]T
+	StringMap              map[string]string
 	StringListMap          map[string][]string
 )
 
