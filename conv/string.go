@@ -6,7 +6,7 @@ import (
 	"github.com/roidaradal/fn"
 )
 
-func IntToString(x int) string {
+func IntToString[T ~int | ~uint](x T) string {
 	return fmt.Sprintf("%d", x)
 }
 
