@@ -1,28 +1,16 @@
-package hash
+package str
 
 import (
 	"math/rand"
-
-	"golang.org/x/crypto/bcrypt"
 )
 
 const (
-	hashCost     int    = 10
 	upperLetters string = "ABCDEFGHJKLMNPQRSTUVWXYZ"
 	lowerLetters string = "abcdefghjkmnpqrstuvwxyz"
 	numbers      string = "23456789"
 )
 
-func Password(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), hashCost)
-	return string(bytes), err
-}
-
-func MatchPassword(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
-}
-
+// Create a random string of given length, with uppercase, lowercase letters, and numbers
 func RandomString(length uint, useUpper, useLower, useNumber bool) string {
 	charSource := ""
 	if useUpper {

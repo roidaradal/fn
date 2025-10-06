@@ -9,34 +9,38 @@ import (
 	"github.com/roidaradal/fn/str"
 )
 
-func ReadTextFile(path string) (string, error) {
-	text, err := os.ReadFile(path)
+// Read contents of the given text file path
+func ReadFile(path string) (string, error) {
+	bytes, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
 	}
-	return string(text), nil
+	return string(bytes), nil
 }
 
-func ReadAllTextLines(path string) ([]string, error) {
-	text, err := ReadTextFile(path)
+// Read all lines of given text file path
+func ReadAllLines(path string) ([]string, error) {
+	text, err := ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	lines := str.CleanSplit(text, "\n")
+	lines := str.Lines(text)
 	return lines, nil
 }
 
-func ReadTextLines(path string) ([]string, error) {
-	lines, err := ReadAllTextLines(path)
+// Read non-blank lines of given text file path
+func ReadLines(path string) ([]string, error) {
+	lines, err := ReadAllLines(path)
 	if err != nil {
 		return nil, err
 	}
-	lines = fn.Filter(lines, check.IsNotBlankString)
+	lines = fn.Filter(lines, check.NotEmptyString)
 	return lines, nil
 }
 
-func ReadCSVFile(path string) ([][]string, error) {
-	lines, err := ReadTextLines(path)
+// Read rows of given CSV file path
+func ReadCSV(path string) ([][]string, error) {
+	lines, err := ReadLines(path)
 	if err != nil {
 		return nil, err
 	}
@@ -47,29 +51,33 @@ func ReadCSVFile(path string) ([][]string, error) {
 	return rows, nil
 }
 
-func LoadJSONObject[T any](path string) (*T, error) {
-	obj, err := loadJSON[T](path)
+// Read JSON object from given file path
+func ReadJSON[T any](path string) (*T, error) {
+	obj, err := readJSON[T](path)
 	if err != nil {
 		return nil, err
 	}
 	return &obj, nil
 }
 
-func LoadJSONList[T any](path string) ([]T, error) {
-	return loadJSON[[]T](path)
+// Read JSON list from given file path
+func ReadJSONList[T any](path string) ([]T, error) {
+	return readJSON[[]T](path)
 }
 
-func LoadJSONMap[T any](path string) (map[string]T, error) {
-	return loadJSON[map[string]T](path)
+// Read JSON map from given file path
+func ReadJSONMap[T any](path string) (map[string]T, error) {
+	return readJSON[map[string]T](path)
 }
 
-func loadJSON[T any](path string) (T, error) {
+// Internal: unmarshal JSON from file
+func readJSON[T any](path string) (T, error) {
 	var obj T
-	data, err := os.ReadFile(path)
+	bytes, err := os.ReadFile(path)
 	if err != nil {
 		return obj, err
 	}
-	err = json.Unmarshal(data, &obj)
+	err = json.Unmarshal(bytes, &obj)
 	if err != nil {
 		return obj, err
 	}

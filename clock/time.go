@@ -2,30 +2,25 @@ package clock
 
 import (
 	"fmt"
-	"strings"
 	"time"
-	_ "time/tzdata"
+	_ "time/tzdata" // include the timezone data package
 )
 
+// Default timezone: Asia/Singapore
 var currentTimezone string = "Asia/Singapore"
 var timezone *time.Location = nil
 
-const (
-	dateFormat      string = "2006-01-02"
-	timeFormat      string = "15:04:05"
-	hourMinsFormat  string = "15:04"
-	standardFormat  string = "2006-01-02 15:04:05"
-	timestampFormat string = "060102150405"
-)
-
-func SetTimezone(newTimezone string) {
+// Override the current timezone
+func SetTimezone(newTimezone string) error {
 	tz, err := time.LoadLocation(newTimezone)
 	if err == nil {
 		currentTimezone = newTimezone
 		timezone = tz
 	}
+	return err
 }
 
+// Get current timezone
 func GetTimezone() *time.Location {
 	if timezone == nil {
 		timezone, _ = time.LoadLocation(currentTimezone)
@@ -33,81 +28,39 @@ func GetTimezone() *time.Location {
 	return timezone
 }
 
+// Returns the current time in current timezone
 func TimeNow() time.Time {
 	return time.Now().In(GetTimezone())
 }
 
-func ParseTime(datetime string) (time.Time, error) {
-	return time.ParseInLocation(standardFormat, datetime, GetTimezone())
-}
-
-func DateTimeNow() string {
-	return StandardFormat(TimeNow())
-}
-
-func DateNow() string {
-	return DateFormat(TimeNow())
-}
-
-func MidnightToday() string {
-	return DateNow() + " 00:00:00"
-}
-
+// Check if hour/minute now is 00:00 (midnight)
 func IsMidnight() bool {
 	return HourMinNow() == "00:00"
 }
 
-func HourMinNow() string {
-	return TimeNow().Format(hourMinsFormat)
-}
-
-func TimestampNow() string {
-	return TimestampFormat(TimeNow())
-}
-
-func DateFormat(t time.Time) string {
-	return t.Format(dateFormat)
-}
-
-func StandardFormat(t time.Time) string {
-	return t.Format(standardFormat)
-}
-
-func TimestampFormat(t time.Time) string {
-	return t.Format(timestampFormat)
-}
-
-func TimeFormat(t time.Time) string {
-	return t.Format(timeFormat)
-}
-
-func DateTimeNowWithExpiry(duration time.Duration) (string, string) {
-	now := TimeNow()
-	expiry := now.Add(duration)
-	return StandardFormat(now), StandardFormat(expiry)
-}
-
+// Extend the given datetime with the given duration
+// Return the extended time in standard format (yyyy-mm-dd hh:mm:ss)
 func ExtendTime(datetime string, duration time.Duration) string {
 	t, err := ParseTime(datetime)
 	if err != nil {
+		// If given datetime is invalid, return it as it is
 		return datetime
 	}
 	return StandardFormat(t.Add(duration))
 }
 
+// Check if given datetime is already expired (before current time)
 func CheckIfExpired(expiry string) bool {
 	limit, err := ParseTime(expiry)
 	if err != nil {
-		return true // default to expired if invalid datetime
+		// Default to expired if invalid datetime
+		return true
 	}
 	return TimeNow().After(limit)
 }
 
-func Sleep(pause time.Duration, start time.Time) {
-	sleep := pause - TimeNow().Sub(start)
-	time.Sleep(sleep)
-}
-
+// Calculate the duration since the given datetime, rounded to the given duration
+// Returns the string format of the duration
 func DurationSince(datetime string, round time.Duration) (string, error) {
 	t, err := ParseTime(datetime)
 	if err != nil {
@@ -116,21 +69,4 @@ func DurationSince(datetime string, round time.Duration) (string, error) {
 	duration := TimeNow().Sub(t)
 	duration = duration.Round(round)
 	return fmt.Sprintf("%v", duration), nil
-}
-
-func IsValidDate(date string) bool {
-	date = strings.TrimSpace(date)
-	if date == "" {
-		return false
-	}
-	_, err := time.Parse(dateFormat, date)
-	return err == nil
-}
-
-func DateStart(date string) string {
-	return fmt.Sprintf("%s 00:00:00", date)
-}
-
-func DateEnd(date string) string {
-	return fmt.Sprintf("%s 23:59:59", date)
 }
