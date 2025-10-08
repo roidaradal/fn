@@ -1,6 +1,7 @@
 package str
 
 import (
+	"fmt"
 	"math/rand"
 	"slices"
 	"strings"
@@ -39,4 +40,9 @@ func RandomString(length uint, useUpper, useLower, useNumber bool) string {
 // Repeat string, joined by glue
 func Repeat(repeat int, text, glue string) string {
 	return strings.Join(slices.Repeat([]string{text}, repeat), glue)
+}
+
+// Wrap string in backticks
+func WrapBackticks(text string) string {
+	return fmt.Sprintf("`%s`", text)
 }

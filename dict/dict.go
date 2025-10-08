@@ -64,6 +64,19 @@ func Zip[K comparable, V any](keys []K, values []V) map[K]V {
 	return m
 }
 
+// Unzip the map, return the list of keys and values,
+// Order of keys is same as the order of corresponding values
+func Unzip[K comparable, V any](items map[K]V) ([]K, []V) {
+	numItems := len(items)
+	keys := make([]K, 0, numItems)
+	values := make([]V, 0, numItems)
+	for k, v := range items {
+		keys = append(keys, k)
+		values = append(values, v)
+	}
+	return keys, values
+}
+
 // Create a map from given struct pointer
 func FromStruct[T any, V any](item *T) (map[string]V, error) {
 	output := make(map[string]V)
@@ -79,4 +92,12 @@ func FromStruct[T any, V any](item *T) (map[string]V, error) {
 		return nil, err
 	}
 	return output, nil
+}
+
+// Add the entries of new map into old map, return old map
+func Update[K comparable, V any](oldMap map[K]V, newMap map[K]V) map[K]V {
+	for k, v := range newMap {
+		oldMap[k] = v
+	}
+	return oldMap
 }
