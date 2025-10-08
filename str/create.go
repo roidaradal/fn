@@ -2,6 +2,8 @@ package str
 
 import (
 	"math/rand"
+	"slices"
+	"strings"
 )
 
 const (
@@ -32,4 +34,9 @@ func RandomString(length uint, useUpper, useLower, useNumber bool) string {
 		b[i] = charSource[idx]
 	}
 	return string(b)
+}
+
+// Repeat string, joined by glue
+func Repeat(repeat int, text, glue string) string {
+	return strings.Join(slices.Repeat([]string{text}, repeat), glue)
 }

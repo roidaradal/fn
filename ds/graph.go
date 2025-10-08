@@ -1,7 +1,5 @@
 package ds
 
-import "github.com/roidaradal/fn/dict"
-
 type Graph struct {
 	vertices    *Set[string]
 	edges       map[string]*Set[string]
@@ -24,7 +22,7 @@ func NewGraph() *Graph {
 // Assumes that vertex set has already been added
 func (g *Graph) InitializeEdges() {
 	for _, vertex := range g.Vertices() {
-		dict.SetDefault(g.edges, vertex, NewSet[string]())
+		g.edges[vertex] = NewSet[string]()
 	}
 }
 

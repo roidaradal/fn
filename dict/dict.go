@@ -11,6 +11,7 @@ type (
 	StringListMap = map[string][]string
 	StringCounter = map[string]int
 	IntCounter    = map[int]int
+	Object        = map[string]any
 )
 
 type Entry[K comparable, V any] struct {
