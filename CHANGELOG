@@ -1,3 +1,8 @@
+v0.4.3 - AnyEqual
+    x Commit: 2025-10-10 10:42
+    x dict.ToObject
+    x check.RefValueEqual, RefValueNotEqual
+    x dyn.AnyEqual, AnyNotEqual
 v0.4.2 - Dict Functions
     x Commit: 2025-10-08 15:55
     x dict.Update

@@ -94,6 +94,11 @@ func FromStruct[T any, V any](item *T) (map[string]V, error) {
 	return output, nil
 }
 
+// Create an Object from given struct pointer
+func ToObject[T any](item *T) (Object, error) {
+	return FromStruct[T, any](item)
+}
+
 // Add the entries of new map into old map, return old map
 func Update[K comparable, V any](oldMap map[K]V, newMap map[K]V) map[K]V {
 	for k, v := range newMap {
