@@ -1,7 +1,7 @@
 package dyn
 
 // Check if two any values are equal
-func AnyEqual(item1 any, item2 any) bool {
+func Equal(item1 any, item2 any) bool {
 	// Dereference item1 if pointer and not null
 	if IsPointer(item1) && !IsNull(item1) {
 		item1 = Deref(item1)
@@ -14,6 +14,6 @@ func AnyEqual(item1 any, item2 any) bool {
 }
 
 // Check if two any values are not equal
-func AnyNotEqual(item1 any, item2 any) bool {
-	return !AnyEqual(item1, item2)
+func NotEqual(item1 any, item2 any) bool {
+	return !Equal(item1, item2)
 }

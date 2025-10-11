@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"maps"
 	"slices"
+
+	"github.com/roidaradal/fn/dyn"
 )
 
 type (
@@ -42,6 +44,16 @@ func Entries[K comparable, V any](items map[K]V) []Entry[K, V] {
 func HasKey[K comparable, V any](items map[K]V, key K) bool {
 	_, hasKey := items[key]
 	return hasKey
+}
+
+// Check if map has value
+func HasValue[K comparable, V comparable](items map[K]V, value V) bool {
+	for _, v := range items {
+		if v == value {
+			return true
+		}
+	}
+	return false
 }
 
 // Set default value if key is not yet in map
@@ -99,10 +111,37 @@ func ToObject[T any](item *T) (Object, error) {
 	return FromStruct[T, any](item)
 }
 
+// Create a struct from given object
+func ToStruct[T any](item Object) (*T, error) {
+	var output T
+	if item == nil {
+		return &output, nil
+	}
+	bytes, err := json.Marshal(item)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bytes, &output)
+	if err != nil {
+		return nil, err
+	}
+	return &output, nil
+}
+
 // Add the entries of new map into old map, return old map
 func Update[K comparable, V any](oldMap map[K]V, newMap map[K]V) map[K]V {
 	for k, v := range newMap {
 		oldMap[k] = v
 	}
 	return oldMap
+}
+
+// Convert a struct to an Object, but only keeping the given fieldNames
+func Prune[T any](structRef *T, fieldNames ...string) *Object {
+	object := make(Object)
+	for _, fieldName := range fieldNames {
+		value := dyn.GetFieldValue(structRef, fieldName)
+		object[fieldName] = value
+	}
+	return &object
 }

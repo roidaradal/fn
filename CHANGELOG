@@ -1,3 +1,9 @@
+v0.4.4 - dict.Prune
+    x Commit: 2025-10-11 16:19
+    x dict.ToStruct
+    x dict.HasValue
+    x dict.Prune
+    x Change dyn.AnyEqual, AnyNotEqual to Equal, NotEqual
 v0.4.3 - AnyEqual
     x Commit: 2025-10-10 10:42
     x dict.ToObject
