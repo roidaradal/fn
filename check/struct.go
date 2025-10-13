@@ -2,6 +2,8 @@ package check
 
 import "github.com/go-playground/validator/v10"
 
+type CustomValidatorFn = func(validator.FieldLevel) bool
+
 var validate = validator.New(validator.WithRequiredStructEnabled())
 
 // Validate struct based on Go JSON validators
@@ -21,4 +23,18 @@ func IsNull[T any](item *T) bool {
 // Check if pointer is not nil
 func NotNull[T any](item *T) bool {
 	return item != nil
+}
+
+// Create custom string validator function
+func NewStringValidator(validatorFn func(string) bool) CustomValidatorFn {
+	return func(fl validator.FieldLevel) bool {
+		return validatorFn(fl.Field().String())
+	}
+}
+
+// Create custom uint validator function
+func NewUintValidator(validatorFn func(uint) bool) CustomValidatorFn {
+	return func(fl validator.FieldLevel) bool {
+		return validatorFn(uint(fl.Field().Uint()))
+	}
 }
