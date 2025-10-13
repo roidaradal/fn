@@ -1,3 +1,6 @@
+v0.4.8 - SplitInitials
+    x Commit: 2025-10-13 17:22
+    x str.SplitInitials
 v0.4.7 - IsAlphaNumeric
     x Commit: 2025-10-13 16:18
     x check.IsAlphaNumeric

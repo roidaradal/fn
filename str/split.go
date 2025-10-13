@@ -32,3 +32,11 @@ func Join(glue string, parts ...string) string {
 func Lines(text string) []string {
 	return CleanSplit(text, "\n")
 }
+
+// Get the initial letters when text is split by glue
+func SplitInitials(text string, glue string) string {
+	initials := fn.Map(CleanSplit(text, glue), func(part string) byte {
+		return part[0]
+	})
+	return string(initials)
+}
