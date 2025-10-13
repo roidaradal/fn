@@ -38,3 +38,13 @@ func NewUintValidator(validatorFn func(uint) bool) CustomValidatorFn {
 		return validatorFn(uint(fl.Field().Uint()))
 	}
 }
+
+// Registers new custom string validator function
+func RegisterStringValidator(name string, validatorFn func(string) bool) {
+	validate.RegisterValidation(name, NewStringValidator(validatorFn))
+}
+
+// Registers new custom uint validator function
+func RegisterUintValidator(name string, validatorFn func(uint) bool) {
+	validate.RegisterValidation(name, NewUintValidator(validatorFn))
+}
