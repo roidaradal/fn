@@ -9,6 +9,9 @@ import (
 )
 
 type (
+	UintMap       = map[string]uint
+	IntMap        = map[string]int
+	BoolMap       = map[string]bool
 	StringMap     = map[string]string
 	StringListMap = map[string][]string
 	StringCounter = map[string]int

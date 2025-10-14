@@ -1,3 +1,6 @@
+v0.4.9 - Dict Alias 
+    x Commit: 2025-10-14 10:46
+    x dict.UintMap, IntMap, BoolMap
 v0.4.8 - SplitInitials
     x Commit: 2025-10-13 17:22
     x str.SplitInitials
