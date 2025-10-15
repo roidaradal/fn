@@ -34,3 +34,31 @@ func (sm *SyncMap[K, V]) Delete(key K) {
 	defer sm.mu.Unlock()
 	delete(sm.data, key)
 }
+
+// Get underlying map from SyncMap
+func (sm *SyncMap[K, V]) Map() map[K]V {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	return sm.data
+}
+
+// Get underlying map's keys
+func (sm *SyncMap[K, V]) Keys() []K {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	return Keys(sm.data)
+}
+
+// Get underlying map's values
+func (sm *SyncMap[K, V]) Values() []V {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	return Values(sm.data)
+}
+
+// Clear underlying map's data
+func (sm *SyncMap[K, V]) Clear() {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	clear(sm.data)
+}
