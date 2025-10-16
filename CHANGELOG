@@ -1,5 +1,8 @@
+v0.4.12 - dict.ValueAs 
+    x Commit: 2025-10-16 15:46
+    x dict.ValueAs
 v0.4.11 - SyncMap Items & Clear 
-    x Commit: 2025-10-25 10:22
+    x Commit: 2025-10-15 10:22
     x dict.SyncMap.Map, Keys, Values 
     x dict.SyncMap.Clear
 v0.4.10 - dict.SyncMap 

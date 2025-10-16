@@ -148,3 +148,14 @@ func Prune[T any](structRef *T, fieldNames ...string) *Object {
 	}
 	return &object
 }
+
+// Get value = obj[key], then type coerce into T
+func ValueAs[T any](obj Object, key string) (T, bool) {
+	var item T
+	value, ok := obj[key]
+	if !ok {
+		return item, false
+	}
+	item, ok = value.(T)
+	return item, ok
+}
