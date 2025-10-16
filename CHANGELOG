@@ -1,3 +1,6 @@
+v0.4.14 - check.IsValidStruct
+    x Commit: 2025-10-26 21:57
+    x check.IsValidStruct adjust *T to T
 v0.4.13 - str.Any 
     x Commit: 2025-10-16 21:31
     x str.Any

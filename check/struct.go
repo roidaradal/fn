@@ -1,14 +1,17 @@
 package check
 
-import "github.com/go-playground/validator/v10"
+import (
+	"github.com/go-playground/validator/v10"
+	"github.com/roidaradal/fn/dyn"
+)
 
 type CustomValidatorFn = func(validator.FieldLevel) bool
 
 var validate = validator.New(validator.WithRequiredStructEnabled())
 
 // Validate struct based on Go JSON validators
-func IsValidStruct[T any](item *T) bool {
-	if item == nil {
+func IsValidStruct[T any](item T) bool {
+	if dyn.IsNull(item) {
 		return false
 	}
 	err := validate.Struct(item)
