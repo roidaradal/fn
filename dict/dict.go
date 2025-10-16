@@ -1,6 +1,7 @@
 package dict
 
 import (
+	"cmp"
 	"encoding/json"
 	"maps"
 	"slices"
@@ -39,6 +40,17 @@ func Entries[K comparable, V any](items map[K]V) []Entry[K, V] {
 	entries := make([]Entry[K, V], 0, len(items))
 	for k, v := range items {
 		entries = append(entries, Entry[K, V]{k, v})
+	}
+	return entries
+}
+
+// Get map entries, sorted by keys
+func SortedEntries[K cmp.Ordered, V any](items map[K]V) []Entry[K, V] {
+	entries := make([]Entry[K, V], 0, len(items))
+	keys := Keys(items)
+	slices.Sort(keys)
+	for _, k := range keys {
+		entries = append(entries, Entry[K, V]{k, items[k]})
 	}
 	return entries
 }
@@ -140,7 +152,8 @@ func Update[K comparable, V any](oldMap map[K]V, newMap map[K]V) map[K]V {
 }
 
 // Convert a struct to an Object, but only keeping the given fieldNames
-func Prune[T any](structRef *T, fieldNames ...string) *Object {
+// Note: T is expected to be a pointer type
+func Prune[T any](structRef T, fieldNames ...string) *Object {
 	object := make(Object)
 	for _, fieldName := range fieldNames {
 		value := dyn.GetFieldValue(structRef, fieldName)

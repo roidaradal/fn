@@ -1,3 +1,8 @@
+v0.4.13 - str.Any 
+    x Commit: 2025-10-16 21:31
+    x str.Any
+    x dict.SortedEntries
+    x dict.Prune adjust *T to T
 v0.4.12 - dict.ValueAs 
     x Commit: 2025-10-16 15:46
     x dict.ValueAs

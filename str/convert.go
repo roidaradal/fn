@@ -56,3 +56,8 @@ func NonEmptyRefString(item *string) *string {
 	}
 	return ToRefString(*item)
 }
+
+// Convert any to string
+func Any(item any) string {
+	return fmt.Sprintf("%v", item)
+}
