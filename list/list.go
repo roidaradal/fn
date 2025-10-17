@@ -23,3 +23,11 @@ func Product[T ~uint | ~int | ~float32 | ~float64](items []T) T {
 	}
 	return product
 }
+
+// Applies the function to each item
+func Decorate[T any](items []T, decorate func(T) T) []T {
+	for i, item := range items {
+		items[i] = decorate(item)
+	}
+	return items
+}

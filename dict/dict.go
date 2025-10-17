@@ -152,8 +152,7 @@ func Update[K comparable, V any](oldMap map[K]V, newMap map[K]V) map[K]V {
 }
 
 // Convert a struct to an Object, but only keeping the given fieldNames
-// Note: T is expected to be a pointer type
-func Prune[T any](structRef T, fieldNames ...string) *Object {
+func Prune[T any](structRef *T, fieldNames ...string) *Object {
 	object := make(Object)
 	for _, fieldName := range fieldNames {
 		value := dyn.GetFieldValue(structRef, fieldName)
