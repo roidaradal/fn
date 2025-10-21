@@ -71,6 +71,16 @@ func HasValue[K comparable, V comparable](items map[K]V, value V) bool {
 	return false
 }
 
+// Check if map has no key
+func NoKey[K comparable, V any](items map[K]V, key K) bool {
+	return !HasKey(items, key)
+}
+
+// Check if map has no value
+func NoValue[K comparable, V comparable](items map[K]V, value V) bool {
+	return !HasValue(items, value)
+}
+
 // Set default value if key is not yet in map
 func SetDefault[K comparable, V any](items map[K]V, key K, value V) {
 	if _, ok := items[key]; !ok {
