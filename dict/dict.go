@@ -89,6 +89,14 @@ func SetDefault[K comparable, V any](items map[K]V, key K, value V) {
 	}
 }
 
+// Gets the value of key, or returns default if key does not exist
+func GetOr[K comparable, V any](items map[K]V, key K, defaultValue V) V {
+	if value, ok := items[key]; ok {
+		return value
+	}
+	return defaultValue
+}
+
 // Zip the list of keys and values to form map
 func Zip[K comparable, V any](keys []K, values []V) map[K]V {
 	m := make(map[K]V, len(keys))
