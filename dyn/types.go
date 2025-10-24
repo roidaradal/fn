@@ -38,6 +38,11 @@ func IsNull(x any) bool {
 	return false
 }
 
+// Check if given item is not nil
+func NotNull(x any) bool {
+	return !IsNull(x)
+}
+
 // Check if given item is a pointer
 func IsPointer(x any) bool {
 	return reflect.TypeOf(x).Kind() == reflect.Pointer

@@ -6,6 +6,7 @@ import (
 	"maps"
 	"slices"
 
+	"github.com/roidaradal/fn"
 	"github.com/roidaradal/fn/dyn"
 )
 
@@ -172,7 +173,7 @@ func Prune[T any](structRef *T, fieldNames ...string) *Object {
 }
 
 // Get value = obj[key], then type coerce into T
-func ValueAs[T any](obj Object, key string) (T, bool) {
+func Get[T any](obj Object, key string) (T, bool) {
 	var item T
 	value, ok := obj[key]
 	if !ok {
@@ -180,4 +181,16 @@ func ValueAs[T any](obj Object, key string) (T, bool) {
 	}
 	item, ok = value.(T)
 	return item, ok
+}
+
+// Get value = obj[key], then type coerce into *T
+func GetRef[T any](obj Object, key string) *T {
+	itemRef, ok := Get[*T](obj, key)
+	return fn.Ternary(ok, itemRef, nil)
+}
+
+// Get value = obj[key], then type coerce into []*T
+func GetListRef[T any](obj Object, key string) []*T {
+	listRef, ok := Get[[]*T](obj, key)
+	return fn.Ternary(ok, listRef, nil)
 }

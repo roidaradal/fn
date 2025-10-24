@@ -1,3 +1,6 @@
+v0.4.17 - dict.Get 
+    x Commit: 2025-10-24 08:02 
+    x dict.Get, GetRef, GetListRef
 v0.4.16 - dict.NoKey 
     x Commit: 2025-10-21 14:11
     x dict.NoKey, NoValue

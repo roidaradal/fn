@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/roidaradal/fn"
+	"github.com/roidaradal/fn/dyn"
 )
 
 // Convert *string to string
@@ -59,5 +60,8 @@ func NonEmptyRefString(item *string) *string {
 
 // Convert any to string
 func Any(item any) string {
+	if dyn.IsPointer(item) {
+		return fmt.Sprintf("%v", dyn.Deref(item))
+	}
 	return fmt.Sprintf("%v", item)
 }
