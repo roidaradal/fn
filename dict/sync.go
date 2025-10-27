@@ -4,7 +4,7 @@ import "sync"
 
 // Concurrency-safe generic map
 type SyncMap[K comparable, V any] struct {
-	mu   sync.Mutex
+	mu   sync.RWMutex
 	data map[K]V
 }
 
@@ -22,8 +22,8 @@ func (sm *SyncMap[K, V]) Set(key K, value V) {
 
 // Concurrent-safe map getter
 func (sm *SyncMap[K, V]) Get(key K) (V, bool) {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
+	sm.mu.RLock()
+	defer sm.mu.RUnlock()
 	value, ok := sm.data[key]
 	return value, ok
 }
@@ -35,30 +35,30 @@ func (sm *SyncMap[K, V]) Delete(key K) {
 	delete(sm.data, key)
 }
 
-// Get underlying map from SyncMap
-func (sm *SyncMap[K, V]) Map() map[K]V {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
-	return sm.data
-}
-
-// Get underlying map's keys
-func (sm *SyncMap[K, V]) Keys() []K {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
-	return Keys(sm.data)
-}
-
-// Get underlying map's values
-func (sm *SyncMap[K, V]) Values() []V {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
-	return Values(sm.data)
-}
-
 // Clear underlying map's data
 func (sm *SyncMap[K, V]) Clear() {
 	sm.mu.Lock()
 	defer sm.mu.Unlock()
 	clear(sm.data)
+}
+
+// Get underlying map from SyncMap
+func (sm *SyncMap[K, V]) Map() map[K]V {
+	sm.mu.RLock()
+	defer sm.mu.RUnlock()
+	return sm.data
+}
+
+// Get underlying map's keys
+func (sm *SyncMap[K, V]) Keys() []K {
+	sm.mu.RLock()
+	defer sm.mu.RUnlock()
+	return Keys(sm.data)
+}
+
+// Get underlying map's values
+func (sm *SyncMap[K, V]) Values() []V {
+	sm.mu.RLock()
+	defer sm.mu.RUnlock()
+	return Values(sm.data)
 }

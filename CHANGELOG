@@ -1,3 +1,7 @@
+v0.4.19 - NumRange
+    x Commit: 2025-10-27 15:26
+    x Update dict.SyncMap to use sync.RWMutex
+    x list.NumRange
 v0.4.18 - dict.GetOr
     x Commit: 2025-10-24 08:41
     x dict.GetOr

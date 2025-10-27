@@ -31,3 +31,11 @@ func Decorate[T any](items []T, decorate func(T) T) []T {
 	}
 	return items
 }
+
+func NumRange[T ~uint | ~int](start, end T) []T {
+	items := make([]T, 0, end-start)
+	for x := start; x < end; x++ {
+		items = append(items, x)
+	}
+	return items
+}
