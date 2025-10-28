@@ -1,3 +1,6 @@
+v0.4.20 - Alias Lookup Types 
+    x Commit: 2025-10-28 11:26 
+    x Change Lookup Types to aliases
 v0.4.19 - NumRange
     x Commit: 2025-10-27 15:26
     x Update dict.SyncMap to use sync.RWMutex
