@@ -1,3 +1,6 @@
+v0.4.21 - Guard Dot 
+    x Commit: 2025-10-29 13:51
+    x str.GuardDot, UpperDot, LowerDot
 v0.4.20 - Alias Lookup Types 
     x Commit: 2025-10-28 11:26 
     x Change Lookup Types to aliases

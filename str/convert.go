@@ -65,3 +65,20 @@ func Any(item any) string {
 	}
 	return fmt.Sprintf("%v", item)
 }
+
+const dot string = "."
+
+// Convert to '.' if empty
+func GuardDot(item string) string {
+	return fn.Ternary(item == "", dot, item)
+}
+
+// Convert to '.' if empty and apply uppercase
+func UpperDot(item string) string {
+	return strings.ToUpper(GuardDot(item))
+}
+
+// Convert to '.' if empty and apply lowercase
+func LowerDot(item string) string {
+	return strings.ToLower(GuardDot(item))
+}
