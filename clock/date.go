@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/roidaradal/fn/str"
 )
 
 const dateFormat string = "2006-01-02"
@@ -41,4 +43,12 @@ func DateEnd(date string) string {
 // Return the midnight datetime today in standard format (yyyy-mm-dd hh:mm:ss)
 func MidnightToday() string {
 	return fmt.Sprintf("%s 00:00:00", DateNow())
+}
+
+// Extracts date from datetime string
+func ExtractDate(datetime string) string {
+	if !IsValidDateTime(datetime) {
+		return ""
+	}
+	return str.SpaceSplit(datetime)[0]
 }

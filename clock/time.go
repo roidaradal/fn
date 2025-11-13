@@ -2,6 +2,7 @@ package clock
 
 import (
 	"fmt"
+	"strings"
 	"time"
 	_ "time/tzdata" // include the timezone data package
 )
@@ -69,4 +70,14 @@ func DurationSince(datetime string, round time.Duration) (string, error) {
 	duration := TimeNow().Sub(t)
 	duration = duration.Round(round)
 	return fmt.Sprintf("%v", duration), nil
+}
+
+// Check if given yyyy-mm-dd hh:mm:ss is valid
+func IsValidDateTime(datetime string) bool {
+	datetime = strings.TrimSpace(datetime)
+	if datetime == "" {
+		return false
+	}
+	_, err := time.Parse(standardFormat, datetime)
+	return err == nil
 }

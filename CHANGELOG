@@ -1,3 +1,7 @@
+v0.4.23 - clock.ExtractDate 
+    x Commit: 2025-11-13 12:05
+    x clock.IsValidDateTime 
+    x clock.ExtractDate
 v0.4.22 - dict.Swap 
     x Commit: 2025-11-06 10:00
     x dict.Swap, SwapList 
