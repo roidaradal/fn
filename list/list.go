@@ -32,10 +32,25 @@ func Decorate[T any](items []T, decorate func(T) T) []T {
 	return items
 }
 
+// Return list of numbers for given range [start, end)
 func NumRange[T ~uint | ~int](start, end T) []T {
 	items := make([]T, 0, end-start)
 	for x := start; x < end; x++ {
 		items = append(items, x)
 	}
 	return items
+}
+
+// Deduplicate list, preserving given order
+func Deduplicate[T comparable](items []T) []T {
+	done := make(map[T]bool)
+	unique := make([]T, 0, len(items))
+	for _, item := range items {
+		if done[item] {
+			continue
+		}
+		unique = append(unique, item)
+		done[item] = true
+	}
+	return unique
 }
