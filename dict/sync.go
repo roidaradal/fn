@@ -13,6 +13,11 @@ func NewSyncMap[K comparable, V any]() *SyncMap[K, V] {
 	return &SyncMap[K, V]{data: make(map[K]V)}
 }
 
+// Creates a SyncMap from existing map
+func SyncMapFrom[K comparable, V any](items map[K]V) *SyncMap[K, V] {
+	return &SyncMap[K, V]{data: items}
+}
+
 // Concurrent-safe map setter
 func (sm *SyncMap[K, V]) Set(key K, value V) {
 	sm.mu.Lock()
