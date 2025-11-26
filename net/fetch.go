@@ -1,3 +1,4 @@
+// Package net contains HTTP request functions.
 package net
 
 import (
@@ -28,7 +29,7 @@ func FetchObject[T any](req *http.Request) (*T, error) {
 	var item T
 	err = json.Unmarshal(body, &item)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse response to object: %w", err)
+		return nil, fmt.Errorf("failed to unmarshal: %w", err)
 	}
 	return &item, nil
 }

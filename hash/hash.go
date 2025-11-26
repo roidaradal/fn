@@ -1,3 +1,4 @@
+// Package hash contains password hashing function using bcrypt.
 package hash
 
 import "golang.org/x/crypto/bcrypt"
@@ -11,7 +12,7 @@ func Password(password string) (string, error) {
 }
 
 // Check if password matches the hash password
-func MatchPassword(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+func MatchPassword(rawPassword, hashPassword string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(rawPassword))
 	return err == nil
 }

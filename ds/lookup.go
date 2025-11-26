@@ -14,13 +14,13 @@ type hasCode interface {
 }
 
 type (
-	IDCodeMap             = map[uint]string // ID => Code mapping
-	CodeIDMap             = map[string]uint // Code => ID mapping
+	IDCodeLookup          = map[uint]string // ID => Code lookup
+	CodeIDLookup          = map[string]uint // Code => ID lookup
 	LookupID[T hasID]     = map[uint]T      // ID => Item lookup
 	LookupCode[T hasCode] = map[string]T    // Code => Item lookup
 )
 
-// Create a new lookup map from list of items, using the entry function
+// Create new lookup from list of items, using entry function
 func NewLookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[K]V {
 	lookup := make(map[K]V, len(items))
 	for _, item := range items {
@@ -30,25 +30,25 @@ func NewLookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[
 	return lookup
 }
 
-// Create new IDCodeMap: map[uint]string from list of items
-func NewIDCodeMap[T identifiable](items []T) IDCodeMap {
-	lookup := make(IDCodeMap)
+// Create new IDCodeLookup from list of items
+func NewIDCodeLookup[T identifiable](items []T) IDCodeLookup {
+	lookup := make(IDCodeLookup)
 	for _, item := range items {
 		lookup[item.GetID()] = item.GetCode()
 	}
 	return lookup
 }
 
-// Create new CodeIDMap: map[string]uint from list of items
-func NewCodeIDMap[T identifiable](items []T) CodeIDMap {
-	lookup := make(CodeIDMap)
+// Create new CodeIDLookup from list of items
+func NewCodeIDLookup[T identifiable](items []T) CodeIDLookup {
+	lookup := make(CodeIDLookup)
 	for _, item := range items {
 		lookup[item.GetCode()] = item.GetID()
 	}
 	return lookup
 }
 
-// Create new LookupID: map[uint]T from list of items
+// Create new LookupID from list of items
 func NewLookupID[T hasID](items []T) LookupID[T] {
 	lookup := make(LookupID[T])
 	for _, item := range items {
@@ -57,7 +57,7 @@ func NewLookupID[T hasID](items []T) LookupID[T] {
 	return lookup
 }
 
-// Create new LookupCode: map[string]T from list of items
+// Create new LookupCode from list of items
 func NewLookupCode[T hasCode](items []T) LookupCode[T] {
 	lookup := make(LookupCode[T])
 	for _, item := range items {
@@ -66,12 +66,13 @@ func NewLookupCode[T hasCode](items []T) LookupCode[T] {
 	return lookup
 }
 
-// Create new LookupID: map[uint]T from given LookupCode
-func NewLookupIDFromCode[T identifiable](codeLookup LookupCode[T], validIDs *Set[uint]) LookupID[T] {
+// Create new LookupID from given LookupCode,
+// Use nil set to skip id validation
+func LookupIDFromCode[T identifiable](codeLookup LookupCode[T], validIDs *Set[uint]) LookupID[T] {
 	idLookup := make(LookupID[T])
 	for _, item := range codeLookup {
 		id := item.GetID()
-		if validIDs != nil && !validIDs.Contains(id) {
+		if validIDs != nil && validIDs.HasNo(id) {
 			continue
 		}
 		idLookup[id] = item
@@ -79,12 +80,13 @@ func NewLookupIDFromCode[T identifiable](codeLookup LookupCode[T], validIDs *Set
 	return idLookup
 }
 
-// Create new LookupCode: map[string]T from given LookupID
-func NewLookupCodeFromID[T identifiable](idLookup LookupID[T], validCodes *Set[string]) LookupCode[T] {
+// Create new LookupCode from given LookupID,
+// Use nil set to skip code validation
+func LookupCodeFromID[T identifiable](idLookup LookupID[T], validCodes *Set[string]) LookupCode[T] {
 	codeLookup := make(LookupCode[T])
 	for _, item := range idLookup {
 		code := item.GetCode()
-		if validCodes != nil && !validCodes.Contains(code) {
+		if validCodes != nil && validCodes.HasNo(code) {
 			continue
 		}
 		codeLookup[code] = item

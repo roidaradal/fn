@@ -16,7 +16,7 @@ func SaveIndentedJSON[T any](item T, path string) error {
 	return saveJSON(item, path, 1)
 }
 
-// Internal: save JSON to file, with or without indent
+// Common: save JSON to file path, with or without indent
 func saveJSON[T any](item T, path string, indent int) error {
 	bytes, err := str.MarshalJSON(item, indent)
 	if err != nil {

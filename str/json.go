@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// Convert the item into a JSON string
+// Create JSON string from struct
 func JSON[T any](item T) (string, error) {
 	bytes, err := MarshalJSON(item, 0)
 	if err != nil {
@@ -14,7 +14,7 @@ func JSON[T any](item T) (string, error) {
 	return string(bytes), nil
 }
 
-// Convert the item into an indented JSON string
+// Create indented JSON string from struct
 func IndentedJSON[T any](item T) (string, error) {
 	bytes, err := MarshalJSON(item, 1)
 	if err != nil {
@@ -23,7 +23,7 @@ func IndentedJSON[T any](item T) (string, error) {
 	return string(bytes), nil
 }
 
-// Marshal the JSON item, with or without indent
+// Marshal struct as JSON, with or without indent
 func MarshalJSON[T any](item T, indent int) ([]byte, error) {
 	if indent <= 0 {
 		return json.Marshal(item)

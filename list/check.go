@@ -1,4 +1,4 @@
-package check
+package list
 
 // Check if all list items pass the ok function
 func All[T any](items []T, ok func(T) bool) bool {
@@ -14,6 +14,28 @@ func All[T any](items []T, ok func(T) bool) bool {
 func Any[T any](items []T, ok func(T) bool) bool {
 	for _, item := range items {
 		if ok(item) {
+			return true
+		}
+	}
+	return false
+}
+
+// Check if all list items pass the ok function
+// (accepts index and item)
+func IndexedAll[T any](items []T, ok func(int, T) bool) bool {
+	for i, item := range items {
+		if !ok(i, item) {
+			return false
+		}
+	}
+	return true
+}
+
+// Check if any list item passes the ok function
+// (accepts index and item)
+func IndexedAny[T any](items []T, ok func(int, T) bool) bool {
+	for i, item := range items {
+		if ok(i, item) {
 			return true
 		}
 	}
@@ -58,4 +80,24 @@ func AnyTrue(items []bool) bool {
 // Check if any list item is false
 func AnyFalse(items []bool) bool {
 	return AnyEqual(items, false)
+}
+
+// Check if all list items are the same
+func AllSame[T comparable](items []T) bool {
+	return len(TallyItems(items)) == 1
+}
+
+// Check if all list items are unique
+func AllUnique[T comparable](items []T) bool {
+	return len(TallyItems(items)) == len(items)
+}
+
+// Check if list is empty
+func IsEmpty[T any](items []T) bool {
+	return len(items) == 0
+}
+
+// Check if list is not empty
+func NotEmpty[T any](items []T) bool {
+	return len(items) > 0
 }

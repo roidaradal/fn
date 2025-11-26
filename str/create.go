@@ -2,7 +2,7 @@ package str
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 	"slices"
 	"strings"
 )
@@ -13,7 +13,7 @@ const (
 	numbers      string = "23456789"
 )
 
-// Create a random string of given length, with uppercase, lowercase letters, and numbers
+// Create random string of given length, using uppercase, lowercase letters, and numbers (flags)
 func RandomString(length uint, useUpper, useLower, useNumber bool) string {
 	charSource := ""
 	if useUpper {
@@ -31,7 +31,7 @@ func RandomString(length uint, useUpper, useLower, useNumber bool) string {
 	}
 	b := make([]byte, length)
 	for i := range length {
-		idx := rand.Intn(numChars)
+		idx := rand.IntN(numChars)
 		b[i] = charSource[idx]
 	}
 	return string(b)
@@ -45,4 +45,19 @@ func Repeat(repeat int, text, glue string) string {
 // Wrap string in backticks
 func WrapBackticks(text string) string {
 	return fmt.Sprintf("`%s`", text)
+}
+
+// Create string of items separated by comma, wrapped in curly braces
+func WrapBraces[T any](items []T) string {
+	return "{ " + strings.Join(List(items), ", ") + " }"
+}
+
+// Create string of items separated by comma, wrapped in square brackets
+func WrapBrackets[T any](items []T) string {
+	return "[ " + strings.Join(List(items), ", ") + " ]"
+}
+
+// Create string of items separated by comma, wrapped in parentheses
+func WrapParens[T any](items []T) string {
+	return "( " + strings.Join(List(items), ", ") + " )"
 }

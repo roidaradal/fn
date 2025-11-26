@@ -4,80 +4,86 @@ import (
 	"fmt"
 	"strings"
 	"time"
-	_ "time/tzdata" // include the timezone data package
 )
 
-// Default timezone: Asia/Singapore
-var currentTimezone string = "Asia/Singapore"
-var timezone *time.Location = nil
-
-// Override the current timezone
-func SetTimezone(newTimezone string) error {
-	tz, err := time.LoadLocation(newTimezone)
-	if err == nil {
-		currentTimezone = newTimezone
-		timezone = tz
-	}
-	return err
+// Returns current time in current timezone
+func Now() time.Time {
+	return time.Now().In(CurrentTimezone())
 }
 
-// Get current timezone
-func GetTimezone() *time.Location {
-	if timezone == nil {
-		timezone, _ = time.LoadLocation(currentTimezone)
-	}
-	return timezone
+// Return current datetime in standard format (yyyy-mm-dd hh:mm:ss)
+func DateTimeNow() string {
+	return StandardFormat(Now())
 }
 
-// Returns the current time in current timezone
-func TimeNow() time.Time {
-	return time.Now().In(GetTimezone())
+// Return datetime now and expiry datetime (based on given duration),
+// Both in standard format (yyyy-mm-dd hh:mm:ss)
+func DateTimeNowWithExpiry(duration time.Duration) (now, expiry string) {
+	timeNow := Now()
+	timeExpiry := timeNow.Add(duration)
+	now, expiry = StandardFormat(timeNow), StandardFormat(timeExpiry)
+	return now, expiry
 }
 
-// Check if hour/minute now is 00:00 (midnight)
+// Return current time in hh:mm:ss format
+func TimeNow() string {
+	return TimeFormat(Now())
+}
+
+// Return current hour and minute in hh:mm format
+func HourMinNow() string {
+	return HourMinFormat(Now())
+}
+
+// Return current datetime in timestamp format (yymmddhhmmss)
+func TimestampNow() string {
+	return TimestampFormat(Now())
+}
+
+// Parse given string as datetime in standard format, in current timezone
+func ParseDateTime(datetime string) (time.Time, error) {
+	datetime = strings.TrimSpace(datetime)
+	return time.ParseInLocation(standardFmt, datetime, CurrentTimezone())
+}
+
+// Check if given datetime in standard format is valid
+func IsValidDateTime(datetime string) bool {
+	_, err := time.Parse(standardFmt, strings.TrimSpace(datetime))
+	return err == nil
+}
+
+// Check if hour:minute now is 00:00 (midnight)
 func IsMidnight() bool {
 	return HourMinNow() == "00:00"
 }
 
-// Extend the given datetime with the given duration
-// Return the extended time in standard format (yyyy-mm-dd hh:mm:ss)
-func ExtendTime(datetime string, duration time.Duration) string {
-	t, err := ParseTime(datetime)
-	if err != nil {
-		// If given datetime is invalid, return it as it is
-		return datetime
-	}
-	return StandardFormat(t.Add(duration))
-}
-
 // Check if given datetime is already expired (before current time)
-func CheckIfExpired(expiry string) bool {
-	limit, err := ParseTime(expiry)
+func IsExpired(expiry string) bool {
+	limit, err := ParseDateTime(expiry)
 	if err != nil {
 		// Default to expired if invalid datetime
 		return true
 	}
-	return TimeNow().After(limit)
+	return Now().After(limit)
 }
 
-// Calculate the duration since the given datetime, rounded to the given duration
-// Returns the string format of the duration
-func DurationSince(datetime string, round time.Duration) (string, error) {
-	t, err := ParseTime(datetime)
+// Extend given datetime with given duration,
+// Return extended time in standard format (yyyy-mm-dd hh:mm:ss)
+func ExtendTime(datetime string, duration time.Duration) (string, error) {
+	dt, err := ParseDateTime(datetime)
 	if err != nil {
 		return "", err
 	}
-	duration := TimeNow().Sub(t)
-	duration = duration.Round(round)
-	return fmt.Sprintf("%v", duration), nil
+	return StandardFormat(dt.Add(duration)), nil
 }
 
-// Check if given yyyy-mm-dd hh:mm:ss is valid
-func IsValidDateTime(datetime string) bool {
-	datetime = strings.TrimSpace(datetime)
-	if datetime == "" {
-		return false
+// Calculate duration since given datetime, rounded to given duration
+// Return duration as string
+func DurationSince(datetime string, round time.Duration) (string, error) {
+	dt, err := ParseDateTime(datetime)
+	if err != nil {
+		return "", err
 	}
-	_, err := time.Parse(standardFormat, datetime)
-	return err == nil
+	duration := Now().Sub(dt).Round(round)
+	return fmt.Sprintf("%v", duration), nil
 }

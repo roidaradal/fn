@@ -8,25 +8,23 @@ type Queue[T any] struct {
 	items []T
 }
 
-// Creates a new empty queue
-func NewQueue[T any]() *Queue[T] {
-	return &Queue[T]{items: make([]T, 0)}
+// Create new empty queue
+func NewQueue[T any](capacity int) *Queue[T] {
+	return &Queue[T]{items: make([]T, 0, capacity)}
 }
 
-// Creates a queue from the given items
+// Creates queue from given list of items
 func QueueFrom[T any](items []T) *Queue[T] {
-	q := NewQueue[T]()
-	q.items = items
-	return q
+	return &Queue[T]{items: items}
 }
 
-// Add item to end of the queue
+// Add item to end of queue
 func (q *Queue[T]) Enqueue(item T) {
 	q.items = append(q.items, item)
 }
 
-// Remove item from the front of the queue,
-// Error if queue is empty
+// Remove item from front of queue,
+// error if empty queue
 func (q *Queue[T]) Dequeue() (T, error) {
 	front, err := q.Front()
 	if err != nil {
@@ -36,8 +34,8 @@ func (q *Queue[T]) Dequeue() (T, error) {
 	return front, nil
 }
 
-// Return the item at front of queue without removing it,
-// Error if queue is empty
+// Return item at front of queue without removing,
+// error if empty queue
 func (q Queue[T]) Front() (T, error) {
 	var front T
 	if q.IsEmpty() {
@@ -55,6 +53,11 @@ func (q Queue[T]) Len() int {
 // Checks if queue is empty
 func (q Queue[T]) IsEmpty() bool {
 	return len(q.items) == 0
+}
+
+// Checks if queue is not empty
+func (q Queue[T]) NotEmpty() bool {
+	return len(q.items) > 0
 }
 
 // Return list of queue items

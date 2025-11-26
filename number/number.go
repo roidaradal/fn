@@ -1,31 +1,47 @@
-package conv
+// Package number contains number-related functions.
+package number
 
 import (
 	"strconv"
 	"strings"
-
-	"github.com/roidaradal/fn"
 )
+
+// Number interface unifies the number types
+type Number interface {
+	~int | ~uint | ~float32 | ~float64
+}
 
 // Absolute value of integer
 func Abs(x int) int {
-	return fn.Ternary(x < 0, -x, x)
+	if x < 0 {
+		return -x
+	}
+	return x
 }
 
-// Parse integer value, default to 0 if invalid
+// Parse integer value, defaults to 0 if invalid
 func ParseInt(value string) int {
 	number, err := strconv.Atoi(strings.TrimSpace(value))
-	return fn.Ternary(err == nil, number, 0)
+	if err != nil {
+		return 0
+	}
+	return number
 }
 
-// Parse float64 value, default to 0 if invalid
+// Parse float64 value, defaults to 0 if invalid
 func ParseFloat(value string) float64 {
 	number, err := strconv.ParseFloat(strings.TrimSpace(value), 64)
-	return fn.Ternary(err == nil, number, 0)
+	if err != nil {
+		return 0
+	}
+	return number
 }
 
 // Convert binary number string to integer, default to 0 if invalid
 func ParseBinary(value string) int {
 	number, err := strconv.ParseInt(strings.TrimSpace(value), 2, 64)
-	return fn.Ternary(err == nil, int(number), 0)
+	if err != nil {
+		return 0
+	}
+	return int(number)
 }

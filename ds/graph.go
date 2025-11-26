@@ -1,79 +1,184 @@
 package ds
 
+import (
+	"fmt"
+	"strings"
+)
+
+type (
+	Edge      [2]Vertex
+	Vertex    = string
+	VertexSet = *Set[Vertex]
+	EdgeSet   = *Set[Edge]
+)
+
 type Graph struct {
-	vertices    *Set[string]
-	edges       map[string]*Set[string]
-	edgeWeights map[VertexPair]float64
+	Vertices     []Vertex
+	Edges        []Edge
+	IndexOf      map[Vertex]int
+	EdgesOf      map[Vertex][]Edge
+	NeighborsOf  map[Vertex]VertexSet
+	EdgeWeightOf map[Edge]float64
 }
 
-// Pair of vertices
-type VertexPair = [2]string
+// Create new Edge from v1-v2 string
+func NewEdge(edge string) Edge {
+	parts := strings.Split(edge, "-")
+	return Edge{parts[0], parts[1]}
+}
 
-// Creates a new, empty graph
+// Edge string representation
+func (e Edge) String() string {
+	return fmt.Sprintf("%s-%s", e[0], e[1])
+}
+
+// Get edge endpoints
+func (e Edge) Tuple() (Vertex, Vertex) {
+	return e[0], e[1]
+}
+
+// Create new empty graph
 func NewGraph() *Graph {
 	return &Graph{
-		vertices:    NewSet[string](),
-		edges:       make(map[string]*Set[string]),
-		edgeWeights: make(map[VertexPair]float64),
+		Vertices:     make([]Vertex, 0),
+		Edges:        make([]Edge, 0),
+		IndexOf:      make(map[Vertex]int),
+		EdgesOf:      make(map[Vertex][]Edge),
+		NeighborsOf:  make(map[Vertex]VertexSet),
+		EdgeWeightOf: make(map[Edge]float64),
 	}
 }
 
-// Initialize edge sets, from the current set of vertices,
-// Assumes that vertex set has already been added
-func (g *Graph) InitializeEdges() {
-	for _, vertex := range g.Vertices() {
-		g.edges[vertex] = NewSet[string]()
+// Create graph from vertices (separated by whitespace),
+// and edgePairs (v1-v2 edges separated by whitespace)
+func GraphFrom(vertices, edgePairs string) *Graph {
+	g := NewGraph()
+	g.Vertices = strings.Fields(vertices)
+	for i, vertex := range g.Vertices {
+		g.IndexOf[vertex] = i
+	}
+	for _, edgePair := range strings.Fields(edgePairs) {
+		edge := NewEdge(edgePair)
+		v1, v2 := edge.Tuple()
+		g.AddUndirectedEdge(v1, v2)
+	}
+	return g
+}
+
+// Add vertex to graph
+func (g *Graph) AddVertex(vertex Vertex) {
+	g.Vertices = append(g.Vertices, vertex)
+	g.IndexOf[vertex] = len(g.Vertices) - 1
+}
+
+// Add undirected edge to graph
+func (g *Graph) AddUndirectedEdge(vertex1, vertex2 Vertex) {
+	g.addEdge(vertex1, vertex2, true)
+}
+
+// Add directed edge to graph
+func (g *Graph) AddDirectedEdge(vertex1, vertex2 Vertex) {
+	g.addEdge(vertex1, vertex2, false)
+}
+
+// Common: add undirected / directed edge to graph
+func (g *Graph) addEdge(vertex1, vertex2 Vertex, undirected bool) {
+	_, ok1 := g.IndexOf[vertex1]
+	_, ok2 := g.IndexOf[vertex2]
+	if !ok1 || !ok2 {
+		return // skip if one vertex is not part of the graph
+	}
+	edge := Edge{vertex1, vertex2}
+	g.Edges = append(g.Edges, edge)
+	g.EdgesOf[vertex1] = append(g.EdgesOf[vertex1], edge)
+	g.EdgesOf[vertex2] = append(g.EdgesOf[vertex2], edge)
+	vertices := []Vertex{vertex1, vertex2}
+	if !undirected {
+		vertices = []Vertex{vertex1}
+	}
+	for _, vertex := range vertices {
+		if _, ok := g.NeighborsOf[vertex]; !ok {
+			g.NeighborsOf[vertex] = NewSet[Vertex]()
+		}
+	}
+	g.NeighborsOf[vertex1].Add(vertex2)
+	if undirected {
+		g.NeighborsOf[vertex2].Add(vertex1)
 	}
 }
 
-// List of graph vertices
-func (g Graph) Vertices() []string {
-	return g.vertices.Items()
-}
-
-// Map of graph edges
-func (g Graph) Edges() map[string][]string {
-	edges := make(map[string][]string)
-	for vertex, edgeSet := range g.edges {
-		edges[vertex] = edgeSet.Items()
+// Get list of vertex neighbors
+func (g Graph) Neighbors(vertex Vertex) []Vertex {
+	neighbors, ok := g.NeighborsOf[vertex]
+	if !ok {
+		return []Vertex{}
 	}
-	return edges
+	return neighbors.Items()
 }
 
-// Get edge weight of vertex pair
-func (g Graph) EdgeWeight(pair VertexPair) (float64, bool) {
-	weight, ok := g.edgeWeights[pair]
+// Get list of vertex neighbors, considering the active edge set
+func (g Graph) ActiveNeighbors(vertex Vertex, activeEdges EdgeSet) []Vertex {
+	neighbors := NewSet[Vertex]()
+	for _, edge := range g.EdgesOf[vertex] {
+		if activeEdges != nil && activeEdges.HasNo(edge) {
+			continue
+		}
+		neighbors.Add(edge[0])
+		neighbors.Add(edge[1])
+	}
+	neighbors.Delete(vertex)
+	return neighbors.Items()
+}
+
+// Get edge weight
+func (g Graph) EdgeWeight(edge Edge) (float64, bool) {
+	weight, ok := g.EdgeWeightOf[edge]
 	return weight, ok
 }
 
-// List of vertices connected to given vertex
-func (g Graph) Neighbors(vertex string) []string {
-	return g.edges[vertex].Items()
-}
-
-// Add graph vertex
-func (g *Graph) AddVertex(vertex string) {
-	g.vertices.Add(vertex)
-}
-
-// Add undirected edge for the two given vertices
-func (g *Graph) AddUndirectedEdge(vertex1, vertex2 string) {
-	if !g.vertices.Contains(vertex1) || !g.vertices.Contains(vertex2) {
-		return // skip if one of the vertices are not part of the graph
+// Check if list of vertices forms a clique
+func (g Graph) IsClique(vertices []Vertex) bool {
+	vertexSet := SetFrom(vertices)
+	for _, vertex := range vertices {
+		adjacent := SetFrom(g.Neighbors(vertex))
+		adjacent.Add(vertex)
+		if vertexSet.Difference(adjacent).NotEmpty() {
+			return false
+		}
 	}
-	g.edges[vertex1].Add(vertex2)
-	g.edges[vertex2].Add(vertex1)
+	return true
 }
 
-// Add directed edge from vertex1 to vertex2
-func (g *Graph) AddDirectedEdge(vertex1, vertex2 string) {
-	if !g.vertices.Contains(vertex1) || !g.vertices.Contains(vertex2) {
-		return // skip if one of the vertices are not part of the graph
+// Check if list of vertices forms an independent set
+func (g Graph) IsIndependentSet(vertices []Vertex) bool {
+	vertexSet := SetFrom(vertices)
+	for _, vertex := range vertices {
+		adjacent := SetFrom(g.Neighbors(vertex))
+		if vertexSet.Intersection(adjacent).NotEmpty() {
+			return false
+		}
 	}
-	g.edges[vertex1].Add(vertex2)
+	return true
 }
 
-// Add graph edge weight
-func (g *Graph) AddEdgeWeight(pair VertexPair, weight float64) {
-	g.edgeWeights[pair] = weight
+// Perform BFS traversal on the graph, starting at given vertex,
+// considering the active edge set, return list of vertices visited
+func (g Graph) BFSTraversal(start Vertex, activeEdges EdgeSet) []Vertex {
+	q := NewQueue[Vertex](len(g.Vertices))
+	q.Enqueue(start)
+	visited := NewSet[Vertex]()
+	for q.NotEmpty() {
+		current, _ := q.Dequeue()
+		if visited.Has(current) {
+			continue
+		}
+		visited.Add(current)
+		for _, neighbor := range g.ActiveNeighbors(current, activeEdges) {
+			if visited.Has(neighbor) {
+				continue
+			}
+			q.Enqueue(neighbor)
+		}
+	}
+	return visited.Items()
 }

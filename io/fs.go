@@ -1,3 +1,4 @@
+// Package io contains input/output and filesystem-related functions.
 package io
 
 import (
@@ -22,7 +23,7 @@ func PathExists(path string) bool {
 	return err == nil
 }
 
-// Creates all non-existent folders in the given path
+// Creates all non-existent folders in given path
 func EnsurePathExists(path string) error {
 	return os.MkdirAll(filepath.Dir(path), defaultFileMode)
 }

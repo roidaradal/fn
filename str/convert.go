@@ -3,17 +3,20 @@ package str
 import (
 	"fmt"
 	"strings"
-
-	"github.com/roidaradal/fn"
-	"github.com/roidaradal/fn/dyn"
 )
 
-// Convert *string to string
-func RefString(item *string) string {
-	if item == nil {
-		return ""
+// Convert item to string
+func Any[T any](item T) string {
+	return fmt.Sprintf("%v", item)
+}
+
+// Convert list of items to string list
+func List[T any](items []T) []string {
+	items2 := make([]string, len(items))
+	for i, item := range items {
+		items2[i] = Any(item)
 	}
-	return strings.TrimSpace(*item)
+	return items2
 }
 
 // Convert int to string
@@ -36,7 +39,10 @@ func Float[T ~float32 | ~float64](x T) string {
 
 // Convert Boolean to string (0, 1)
 func Boolean(flag bool) string {
-	return fn.Ternary(flag, "1", "0")
+	if flag {
+		return "1"
+	}
+	return "0"
 }
 
 // Convert string to Boolean (false if "0", true otherwise)
@@ -44,10 +50,21 @@ func ToBoolean(flag string) bool {
 	return flag != "0"
 }
 
+// Convert *string to string
+func RefString(item *string) string {
+	if item == nil {
+		return ""
+	}
+	return strings.TrimSpace(*item)
+}
+
 // Convert string to *string, nil if empty string
 func ToRefString(item string) *string {
 	item = strings.TrimSpace(item)
-	return fn.Ternary(item == "", nil, &item)
+	if item == "" {
+		return nil
+	}
+	return &item
 }
 
 // Ensure *string contains non-empty string, nil otherwise
@@ -58,27 +75,20 @@ func NonEmptyRefString(item *string) *string {
 	return ToRefString(*item)
 }
 
-// Convert any to string
-func Any(item any) string {
-	if dyn.IsPointer(item) {
-		return fmt.Sprintf("%v", dyn.Deref(item))
-	}
-	return fmt.Sprintf("%v", item)
-}
-
-const dot string = "."
-
-// Convert to '.' if empty
+// Convert to '.' if empty string
 func GuardDot(item string) string {
-	return fn.Ternary(item == "", dot, item)
+	if item == "" {
+		return "."
+	}
+	return item
 }
 
-// Convert to '.' if empty and apply uppercase
+// Convert to '.' if empty string, and convert to uppercase
 func UpperDot(item string) string {
 	return strings.ToUpper(GuardDot(item))
 }
 
-// Convert to '.' if empty and apply lowercase
+// Convert to '.' if empty string, and convert to lowercase
 func LowerDot(item string) string {
 	return strings.ToLower(GuardDot(item))
 }

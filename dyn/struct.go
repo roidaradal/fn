@@ -5,32 +5,30 @@ import (
 	"reflect"
 )
 
-// Get item.field, where item is a *struct
-func GetFieldValue(item any, field string) any {
-	if !IsStructPointer(item) {
+// Get item.field from structRef
+func GetFieldValue(structRef any, field string) any {
+	if !IsStructPointer(structRef) {
 		return nil
 	}
-	return reflect.ValueOf(item).Elem().FieldByName(field).Interface()
+	return reflect.ValueOf(structRef).Elem().FieldByName(field).Interface()
 }
 
-// Get item.field, where item is a *struct,
-// Returns the field as the given type, if valid
-func GetField[T any](item any, field string) (T, bool) {
-	rawValue := GetFieldValue(item, field)
+// Get item.field from structRef, and type coerce into T
+func GetField[T any](structRef any, field string) (T, bool) {
+	rawValue := GetFieldValue(structRef, field)
 	value, ok := rawValue.(T)
 	return value, ok
 }
 
-// Get item.field, where item is a *struct, and field value is a string
-func GetFieldString(item any, field string) string {
-	value := GetFieldValue(item, field)
-	return fmt.Sprintf("%v", value)
+// Get item.field from structRef, return field value as string
+func GetFieldString(structRef any, field string) string {
+	return fmt.Sprintf("%v", GetFieldValue(structRef, field))
 }
 
-// Set item.field, where item is a *struct
-func SetFieldValue(item any, field string, value any) {
-	if !IsStructPointer(item) {
+// Set item.field = value for structRef
+func SetFieldValue(structRef any, field string, value any) {
+	if !IsStructPointer(structRef) {
 		return
 	}
-	reflect.ValueOf(item).Elem().FieldByName(field).Set(reflect.ValueOf(value))
+	reflect.ValueOf(structRef).Elem().FieldByName(field).Set(reflect.ValueOf(value))
 }

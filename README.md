@@ -1,40 +1,50 @@
-# Fn
-A collection of commonly-used functions, patterns, and shortcuts for Go
+# fn
+A collection of commonly-used functions, patterns, and shortcuts for Go.
 
 `go get github.com/roidaradal/fn/...`
 
-## fn
-Functional programming functions (map, filter) and quality-of-life functions (ternary)
-
-## check
-Validation / checker functions; output is **Boolean**
+## check 
+The **check** package contains validation / checker functions (**Boolean** output).
 
 ## clock
-Time and date-related functions
+The **clock** package contains time and date-related functions.
 
-## conv 
-Type conversion and transformation functions
+## comb
+The **comb** package contains combinatorics functions.
 
 ## dict 
-Maps-related functions
+The **dict** package contains map-related functions.
 
-## ds
-Data structures (graph, linked list, lookup, queue, stack, set)
+## ds 
+The **ds** package contains useful data structures:
 
-## dyn
-Shortcuts to common `reflect` package steps; _dyn_ stands for dynamic
+* Graph
+* Linked List 
+* Lookup 
+* Queue
+* Set
+* Stack
+
+## dyn 
+The **dyn** (dynamic) package contains shortcuts for common `reflect` package steps.
 
 ## hash 
-Password hashing functions (using `bcrypt`)
+The **hash** package contains password hashing functions (using `bcrypt`).
 
-## io
-Input, output, filesystem-related functions
+## io 
+The **io** package contains input/output and filesystem-related functions.
 
-## list
-List-related functions
+## lang 
+The **lang** package contains quality-of-life functions. 
 
-## net
-HTTP requests and fetching functions
+## list 
+The **list** package contains list-related functions.
+
+## net 
+The **net** package contains HTTP request functions.
+
+# number 
+The **number** package contains number-related functions.
 
 ## str
-String-related parsing and functions
+The **str** package contains string-related functions.

@@ -1,3 +1,7 @@
+v0.5.0 - Pre-Release Candidate
+    x Commit: 2025-11-26 16:30
+    x Add MIT License
+    x Reorganize packages
 v0.4.25 - SyncMapFrom 
     x Commit: 2025-11-19 10:30
     x dict.SyncMapFrom
