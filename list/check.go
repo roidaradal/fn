@@ -1,5 +1,17 @@
 package list
 
+import "slices"
+
+// Check if list is empty
+func IsEmpty[T any](items []T) bool {
+	return len(items) == 0
+}
+
+// Check if list is not empty
+func NotEmpty[T any](items []T) bool {
+	return len(items) > 0
+}
+
 // Check if all list items pass the ok function
 func All[T any](items []T, ok func(T) bool) bool {
 	for _, item := range items {
@@ -12,12 +24,7 @@ func All[T any](items []T, ok func(T) bool) bool {
 
 // Check if any list item passes the ok function
 func Any[T any](items []T, ok func(T) bool) bool {
-	for _, item := range items {
-		if ok(item) {
-			return true
-		}
-	}
-	return false
+	return slices.ContainsFunc(items, ok)
 }
 
 // Check if all list items pass the ok function
@@ -54,12 +61,7 @@ func AllEqual[T comparable](items []T, value T) bool {
 
 // Check if any list item is equal to the given value
 func AnyEqual[T comparable](items []T, value T) bool {
-	for _, item := range items {
-		if item == value {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(items, value)
 }
 
 // Check if all list items are true
@@ -90,14 +92,4 @@ func AllSame[T comparable](items []T) bool {
 // Check if all list items are unique
 func AllUnique[T comparable](items []T) bool {
 	return len(TallyItems(items)) == len(items)
-}
-
-// Check if list is empty
-func IsEmpty[T any](items []T) bool {
-	return len(items) == 0
-}
-
-// Check if list is not empty
-func NotEmpty[T any](items []T) bool {
-	return len(items) > 0
 }

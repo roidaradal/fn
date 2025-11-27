@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -27,16 +28,11 @@ func ReadLines(path string) ([]string, error) {
 
 // Read non-empty lines of given text file path
 func ReadNonEmptyLines(path string) ([]string, error) {
-	allLines, err := ReadLines(path)
+	lines, err := ReadLines(path)
 	if err != nil {
 		return nil, err
 	}
-	lines := make([]string, 0, len(allLines))
-	for _, line := range allLines {
-		if line != "" {
-			lines = append(lines, line)
-		}
-	}
+	lines = list.Filter(lines, str.NotEmpty)
 	return lines, nil
 }
 
@@ -46,10 +42,7 @@ func ReadCSV(path string) ([][]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	rows := make([][]string, len(lines))
-	for i, line := range lines {
-		rows[i] = str.CommaSplit(line)
-	}
+	rows := list.Map(lines, str.CommaSplit)
 	return rows, nil
 }
 

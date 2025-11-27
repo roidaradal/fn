@@ -4,7 +4,12 @@ package number
 import (
 	"strconv"
 	"strings"
+
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
+
+var printer = message.NewPrinter(language.English)
 
 // Number interface unifies the number types
 type Number interface {
@@ -44,4 +49,9 @@ func ParseBinary(value string) int {
 		return 0
 	}
 	return int(number)
+}
+
+// Return the number formatted with commas
+func Comma[T ~int | ~uint](number T) string {
+	return printer.Sprintf("%d", number)
 }

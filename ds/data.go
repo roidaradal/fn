@@ -1,6 +1,9 @@
 package ds
 
-import "strings"
+import (
+	"github.com/roidaradal/fn/list"
+	"github.com/roidaradal/fn/str"
+)
 
 // Struct for list of items
 type List[T any] struct {
@@ -65,18 +68,8 @@ type DataRows struct {
 
 // Get lines from rows, and split each line by comma
 func (d DataRows) GetRows() [][]string {
-	lines := strings.Split(d.Rows, "\n")
-	rows := make([][]string, 0, len(lines))
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-		if line == "" {
-			continue
-		}
-		row := strings.Split(line, ",")
-		for i, cell := range row {
-			row[i] = strings.TrimSpace(cell)
-		}
-		rows = append(rows, row)
-	}
+	lines := str.Lines(d.Rows)
+	lines = list.Filter(lines, str.NotEmpty)
+	rows := list.Map(lines, str.CommaSplit)
 	return rows
 }

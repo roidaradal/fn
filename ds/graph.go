@@ -3,6 +3,8 @@ package ds
 import (
 	"fmt"
 	"strings"
+
+	"github.com/roidaradal/fn/str"
 )
 
 type (
@@ -23,7 +25,7 @@ type Graph struct {
 
 // Create new Edge from v1-v2 string
 func NewEdge(edge string) Edge {
-	parts := strings.Split(edge, "-")
+	parts := str.CleanSplit(edge, "-")
 	return Edge{parts[0], parts[1]}
 }
 
@@ -57,7 +59,7 @@ func GraphFrom(vertices, edgePairs string) *Graph {
 	for i, vertex := range g.Vertices {
 		g.IndexOf[vertex] = i
 	}
-	for _, edgePair := range strings.Fields(edgePairs) {
+	for edgePair := range strings.FieldsSeq(edgePairs) {
 		edge := NewEdge(edgePair)
 		v1, v2 := edge.Tuple()
 		g.AddUndirectedEdge(v1, v2)

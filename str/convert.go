@@ -37,6 +37,14 @@ func Float[T ~float32 | ~float64](x T) string {
 	return fmt.Sprintf("%f", x)
 }
 
+// Convert *float to string
+func RefFloat[T ~float32 | ~float64](x *T) string {
+	if x == nil {
+		return ""
+	}
+	return Float(*x)
+}
+
 // Convert Boolean to string (0, 1)
 func Boolean(flag bool) string {
 	if flag {

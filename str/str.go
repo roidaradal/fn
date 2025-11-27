@@ -3,12 +3,7 @@ package str
 
 import (
 	"strings"
-
-	"golang.org/x/text/language"
-	"golang.org/x/text/message"
 )
-
-var printer = message.NewPrinter(language.English)
 
 // Utility function for checking empty string
 func IsEmpty(text string) bool {
@@ -18,11 +13,6 @@ func IsEmpty(text string) bool {
 // Utility function for checking non-empty string
 func NotEmpty(text string) bool {
 	return text != ""
-}
-
-// Return the number formatted with commas
-func Comma[T ~int | ~uint](number T) string {
-	return printer.Sprintf("%d", number)
 }
 
 // Split the text by separator, trim each part's extra whitespace

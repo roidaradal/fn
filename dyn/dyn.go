@@ -10,11 +10,11 @@ import (
 func Equal(item1, item2 any) bool {
 	// Dereference item1 if pointer and not null
 	if IsPointer(item1) && NotNull(item1) {
-		item1 = Deref(item1)
+		return Equal(Deref(item1), item2)
 	}
 	// Dereference item2 if pointer and not null
 	if IsPointer(item2) && NotNull(item2) {
-		item2 = Deref(item2)
+		return Equal(item1, Deref(item2))
 	}
 	return item1 == item2
 }

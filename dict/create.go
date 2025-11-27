@@ -1,13 +1,14 @@
 package dict
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"maps"
+)
 
 // Add entries of new map into old map, returns old map.
 // If there are key conflicts, new map entries overwrite the old map entries.
 func Update[K comparable, V any](oldMap, newMap map[K]V) map[K]V {
-	for k, v := range newMap {
-		oldMap[k] = v
-	}
+	maps.Copy(oldMap, newMap)
 	return oldMap
 }
 

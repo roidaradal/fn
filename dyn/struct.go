@@ -5,6 +5,14 @@ import (
 	"reflect"
 )
 
+// Set item.field = value for structRef
+func SetFieldValue(structRef any, field string, value any) {
+	if !IsStructPointer(structRef) {
+		return
+	}
+	reflect.ValueOf(structRef).Elem().FieldByName(field).Set(reflect.ValueOf(value))
+}
+
 // Get item.field from structRef
 func GetFieldValue(structRef any, field string) any {
 	if !IsStructPointer(structRef) {
@@ -23,12 +31,4 @@ func GetField[T any](structRef any, field string) (T, bool) {
 // Get item.field from structRef, return field value as string
 func GetFieldString(structRef any, field string) string {
 	return fmt.Sprintf("%v", GetFieldValue(structRef, field))
-}
-
-// Set item.field = value for structRef
-func SetFieldValue(structRef any, field string, value any) {
-	if !IsStructPointer(structRef) {
-		return
-	}
-	reflect.ValueOf(structRef).Elem().FieldByName(field).Set(reflect.ValueOf(value))
 }

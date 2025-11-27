@@ -31,7 +31,8 @@ func MapList[T any](indexes []int, values []T) []T {
 	return results
 }
 
-// Apply the translation mask to each list item, return mapped items
+// Apply the translation mask to each list item, return mapped items.
+// Can have zero value if item is not in mask map
 func Translate[K comparable, V any](items []K, mask map[K]V) []V {
 	results := make([]V, len(items))
 	for i, item := range items {
@@ -64,10 +65,11 @@ func IndexedFilter[T any](items []T, keep func(int, T) bool) []T {
 
 // Apply task function to each item
 func Apply[T any](items []T, task func(T) T) []T {
+	results := make([]T, len(items))
 	for i, item := range items {
-		items[i] = task(item)
+		results[i] = task(item)
 	}
-	return items
+	return results
 }
 
 // Deduplicate list, preserving given order
