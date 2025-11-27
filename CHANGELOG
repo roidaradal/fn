@@ -1,3 +1,8 @@
+v0.5.2 - Length Functions 
+    x Commit: 2025-11-27 15:22
+    x str.Length, dict.Length 
+    x dict.GroupByValueList
+    x dict.SortValues
 v0.5.1 - Implementation Optimization
     x Commit: 2025-11-27 09:57
     x Optimized some suggested implementations

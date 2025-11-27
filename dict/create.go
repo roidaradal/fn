@@ -71,6 +71,17 @@ func GroupByValue[K, V comparable](items map[K]V) map[V][]K {
 	return groups
 }
 
+// Group data (map[K][]V) by values => map[V][]K
+func GroupByValueList[K, V comparable](items map[K][]V) map[V][]K {
+	groups := make(map[V][]K)
+	for k := range items {
+		for _, v := range items[k] {
+			groups[v] = append(groups[v], k)
+		}
+	}
+	return groups
+}
+
 // Create Object from given struct pointer
 func ToObject[T any](structRef *T) (Object, error) {
 	return FromStruct[T, any](structRef)

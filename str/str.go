@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+// Utility for returning string length
+func Length(text string) int {
+	return len(text)
+}
+
 // Utility function for checking empty string
 func IsEmpty(text string) bool {
 	return text == ""

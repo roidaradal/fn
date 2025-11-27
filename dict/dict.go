@@ -7,6 +7,11 @@ import (
 	"slices"
 )
 
+// Get map length
+func Length[K comparable, V any](items map[K]V) int {
+	return len(items)
+}
+
 // Get map keys
 func Keys[K comparable, V any](items map[K]V) []K {
 	return slices.Collect(maps.Keys(items))
@@ -35,6 +40,14 @@ func SortedEntries[K cmp.Ordered, V any](items map[K]V) []Entry[K, V] {
 		entries[i] = Entry[K, V]{k, items[k]}
 	}
 	return entries
+}
+
+// Sort the list of values for each key
+func SortValues[K comparable, V cmp.Ordered](items map[K][]V) {
+	for k, values := range items {
+		slices.Sort(values)
+		items[k] = values
+	}
 }
 
 // Check if map has key
