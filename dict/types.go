@@ -34,3 +34,8 @@ func Flags[T comparable](items []T, flag bool) map[T]bool {
 	}
 	return flags
 }
+
+// Return Entry as Key, Value
+func (e Entry[K, V]) Tuple() (K, V) {
+	return e.Key, e.Value
+}

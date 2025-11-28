@@ -43,7 +43,7 @@ The **list** package contains list-related functions.
 ## net 
 The **net** package contains HTTP request functions.
 
-# number 
+## number 
 The **number** package contains number-related functions.
 
 ## str

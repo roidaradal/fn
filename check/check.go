@@ -46,3 +46,17 @@ func RefValueEqual[T comparable](item1 *T, item2 *T) bool {
 func RefValueNotEqual[T comparable](item1 *T, item2 *T) bool {
 	return !RefValueEqual(item1, item2)
 }
+
+// Creates function that checks if value is equal to goal value
+func IsEqual[T comparable](goalValue T) func(T) bool {
+	return func(value T) bool {
+		return value == goalValue
+	}
+}
+
+// Creates function that checks if value is not equal to goal value
+func NotEqual[T comparable](goalValue T) func(T) bool {
+	return func(value T) bool {
+		return value != goalValue
+	}
+}

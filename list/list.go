@@ -1,7 +1,10 @@
 // Package list contains list-related functions.
 package list
 
-import "math/rand/v2"
+import (
+	"math/rand/v2"
+	"slices"
+)
 
 // Return list length
 func Length[T any](items []T) int {
@@ -81,4 +84,9 @@ func Count[T comparable](items []T, value T) int {
 		}
 	}
 	return count
+}
+
+// Creates a list containing the given <value> repeated <count> times
+func Repeated[T any](value T, count int) []T {
+	return slices.Repeat([]T{value}, count)
 }
