@@ -1,3 +1,7 @@
+v0.5.4 - Stack / Queue Capacity 
+    x Commit: 2025-11-29 22:56
+    x Remove capacity from stack, queue constructors
+    x io.ReadRawLines
 v0.5.3 - Entry Tuple
     x Commit: 2025-11-28 11:12
     x dict.Entry.Tuple

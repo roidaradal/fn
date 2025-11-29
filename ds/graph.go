@@ -166,7 +166,7 @@ func (g Graph) IsIndependentSet(vertices []Vertex) bool {
 // Perform BFS traversal on the graph, starting at given vertex,
 // considering the active edge set, return list of vertices visited
 func (g Graph) BFSTraversal(start Vertex, activeEdges EdgeSet) []Vertex {
-	q := NewQueue[Vertex](len(g.Vertices))
+	q := NewQueue[Vertex]()
 	q.Enqueue(start)
 	visited := NewSet[Vertex]()
 	for q.NotEmpty() {

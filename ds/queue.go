@@ -9,8 +9,8 @@ type Queue[T any] struct {
 }
 
 // Create new empty queue
-func NewQueue[T any](capacity int) *Queue[T] {
-	return &Queue[T]{items: make([]T, 0, capacity)}
+func NewQueue[T any]() *Queue[T] {
+	return &Queue[T]{items: make([]T, 0)}
 }
 
 // Creates queue from given list of items

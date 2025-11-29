@@ -39,7 +39,8 @@ func CommaSplit(text string) []string {
 	return CleanSplit(text, ",")
 }
 
-// Get lines from text, separated by \n
+// Get lines from text, separated by \n,
+// Each line is trimmed for whitespace at both ends
 func Lines(text string) []string {
 	return CleanSplit(text, "\n")
 }

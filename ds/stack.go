@@ -9,8 +9,8 @@ type Stack[T any] struct {
 }
 
 // Create new empty stack
-func NewStack[T any](capacity int) *Stack[T] {
-	return &Stack[T]{items: make([]T, 0, capacity)}
+func NewStack[T any]() *Stack[T] {
+	return &Stack[T]{items: make([]T, 0)}
 }
 
 // Create stack from given list of items (last item = stack top)

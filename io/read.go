@@ -3,6 +3,7 @@ package io
 import (
 	"encoding/json"
 	"os"
+	"strings"
 
 	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
@@ -17,7 +18,18 @@ func ReadFile(path string) (string, error) {
 	return string(bytes), nil
 }
 
-// Read lines of given text file path
+// Read lines of given text file path,
+// Lines are not whitespace trimmed
+func ReadRawLines(path string) ([]string, error) {
+	text, err := ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return strings.Split(text, "\n"), nil
+}
+
+// Read lines of given text file path,
+// Each line is trimmed for whitespace at both ends
 func ReadLines(path string) ([]string, error) {
 	text, err := ReadFile(path)
 	if err != nil {
@@ -26,7 +38,8 @@ func ReadLines(path string) ([]string, error) {
 	return str.Lines(text), nil
 }
 
-// Read non-empty lines of given text file path
+// Read non-empty lines of given text file path,
+// Each non-empty line is trimmed for whitespace at both ends
 func ReadNonEmptyLines(path string) ([]string, error) {
 	lines, err := ReadLines(path)
 	if err != nil {
