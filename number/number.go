@@ -2,6 +2,7 @@
 package number
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -22,6 +23,11 @@ func Abs(x int) int {
 		return -x
 	}
 	return x
+}
+
+// Compute ratio of numerator / denominator ints
+func Ratio[T Number](numerator, denominator T) float64 {
+	return float64(numerator) / float64(denominator)
 }
 
 // Parse integer value, defaults to 0 if invalid
@@ -54,4 +60,10 @@ func ParseBinary(value string) int {
 // Return the number formatted with commas
 func Comma[T ~int | ~uint](number T) string {
 	return printer.Sprintf("%d", number)
+}
+
+// Return the float number formatted with commas, up to given number of decimals
+func FloatComma[T ~float32 | ~float64](number T, decimals int) string {
+	template := fmt.Sprintf("%%.%df", decimals)
+	return printer.Sprintf(template, number)
 }
