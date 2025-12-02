@@ -4,6 +4,7 @@ package str
 import (
 	"fmt"
 	"strings"
+	"unicode"
 )
 
 // Utility for returning string length
@@ -101,4 +102,16 @@ func StartsWithLower(text string) bool {
 func StartsWithDigit(text string) bool {
 	first := text[0]
 	return '0' <= first && first <= '9'
+}
+
+// Get leading whitespace
+func SpacePrefix(text string) string {
+	suffix := strings.TrimLeftFunc(text, unicode.IsSpace)
+	return strings.TrimSuffix(text, suffix)
+}
+
+// Get trailing whitespace
+func SpaceSuffix(text string) string {
+	prefix := strings.TrimRightFunc(text, unicode.IsSpace)
+	return strings.TrimPrefix(text, prefix)
 }

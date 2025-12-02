@@ -1,3 +1,7 @@
+v0.5.8 - Trailing Space 
+    x Commit: 2025-12-02 15:25
+    x str.SpacePrefix 
+    x str.SpaceSuffix
 v0.5.7 - String StartsWith 
     x Commit: 2025-12-02 15:15
     x str.StartsWithUpper/Lower/Digit
