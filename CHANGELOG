@@ -1,3 +1,7 @@
+v0.5.6 - String Alignment
+    x Commit: 2025-12-02 14:22
+    x str.Center
+    x str.LeftAlign, RightAlign
 v0.5.5 - Float Functions    
     x Commit: 2025-12-01 11:07
     x number.Ratio 

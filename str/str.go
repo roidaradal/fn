@@ -2,6 +2,7 @@
 package str
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -58,4 +59,28 @@ func PartInitials(text, sep string) string {
 		initials[i] = part[0]
 	}
 	return string(initials)
+}
+
+// Center the string by padding with whitespace
+func Center(text string, width int) string {
+	padTotal := width - len(text)
+	if padTotal <= 0 {
+		return text // return as-is if no need to pad
+	}
+	pad1 := padTotal / 2
+	pad2 := padTotal - pad1
+	lpad, rpad := strings.Repeat(" ", pad2), strings.Repeat(" ", pad1)
+	return lpad + text + rpad
+}
+
+// Left align given string
+func LeftAlign(text string, width int) string {
+	template := fmt.Sprintf("%%-%ds", width)
+	return fmt.Sprintf(template, text)
+}
+
+// Right align given string
+func RightAlign(text string, width int) string {
+	template := fmt.Sprintf("%%%ds", width)
+	return fmt.Sprintf(template, text)
 }

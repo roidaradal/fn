@@ -5,7 +5,7 @@ go 1.25.4
 require (
 	github.com/go-playground/validator/v10 v10.28.0
 	golang.org/x/crypto v0.45.0
-	golang.org/x/text v0.31.0 
+	golang.org/x/text v0.31.0
 )
 
 require (
