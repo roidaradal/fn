@@ -84,3 +84,21 @@ func RightAlign(text string, width int) string {
 	template := fmt.Sprintf("%%%ds", width)
 	return fmt.Sprintf(template, text)
 }
+
+// Check if string starts with uppercase letter
+func StartsWithUpper(text string) bool {
+	first := text[0]
+	return 'A' <= first && first <= 'Z' // A-Z
+}
+
+// Check if string starts with lowercase letter
+func StartsWithLower(text string) bool {
+	first := text[0]
+	return 'a' <= first && first <= 'z' // a-z
+}
+
+// Check if string starts with digit
+func StartsWithDigit(text string) bool {
+	first := text[0]
+	return '0' <= first && first <= '9'
+}
