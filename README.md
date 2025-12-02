@@ -12,6 +12,9 @@ The **clock** package contains time and date-related functions.
 ## comb
 The **comb** package contains combinatorics functions.
 
+## conk
+The **conk** package contains concurrency-related functions.
+
 ## dict 
 The **dict** package contains map-related functions.
 

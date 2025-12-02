@@ -6,6 +6,7 @@ require (
 	github.com/go-playground/validator/v10 v10.28.0
 	golang.org/x/crypto v0.45.0
 	golang.org/x/text v0.31.0
+	golang.org/x/sync v0.18.0 
 )
 
 require (
