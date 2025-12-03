@@ -158,3 +158,14 @@ func Filter[K comparable, V any](items map[K]V, keep func(K, V) bool) map[K]V {
 	}
 	return results
 }
+
+// Merge the counts from counter maps into one map
+func MergeCounts[K comparable](counters []map[K]int) map[K]int {
+	total := make(map[K]int)
+	for _, counter := range counters {
+		for key, count := range counter {
+			total[key] += count
+		}
+	}
+	return total
+}
