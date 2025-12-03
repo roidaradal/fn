@@ -106,12 +106,22 @@ func StartsWithDigit(text string) bool {
 
 // Get leading whitespace
 func SpacePrefix(text string) string {
-	suffix := strings.TrimLeftFunc(text, unicode.IsSpace)
+	suffix := TrimLeftSpace(text)
 	return strings.TrimSuffix(text, suffix)
 }
 
 // Get trailing whitespace
 func SpaceSuffix(text string) string {
-	prefix := strings.TrimRightFunc(text, unicode.IsSpace)
+	prefix := TrimRightSpace(text)
 	return strings.TrimPrefix(text, prefix)
+}
+
+// Trim left whitespace
+func TrimLeftSpace(text string) string {
+	return strings.TrimLeftFunc(text, unicode.IsSpace)
+}
+
+// Trim right whitespace
+func TrimRightSpace(text string) string {
+	return strings.TrimRightFunc(text, unicode.IsSpace)
 }
