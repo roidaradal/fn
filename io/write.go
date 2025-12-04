@@ -6,6 +6,11 @@ import (
 	"github.com/roidaradal/fn/str"
 )
 
+// Save string to given file path
+func SaveString(text, path string) error {
+	return os.WriteFile(path, []byte(text), defaultFileMode)
+}
+
 // Save JSON object to given file path
 func SaveJSON[T any](item T, path string) error {
 	return saveJSON(item, path, 0)

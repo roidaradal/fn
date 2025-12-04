@@ -1,3 +1,7 @@
+v0.5.13 - SaveString
+    x Commit: 2025-12-04 11:12
+    x io.OpenFile
+    x io.SaveString
 v0.5.12 - dict.CounterFunc
     x Commit: 2025-12-03 15:20
     x dict.CounterFunc
