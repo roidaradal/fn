@@ -11,6 +11,11 @@ func Length[T any](items []T) int {
 	return len(items)
 }
 
+// Return the nth item from the back of the list
+func Last[T any](items []T, index int) T {
+	return items[len(items)-index]
+}
+
 // Returns new list with items copied from given list
 func Copy[T any](items []T) []T {
 	items2 := append([]T{}, items...)

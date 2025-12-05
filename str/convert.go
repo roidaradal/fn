@@ -83,6 +83,14 @@ func NonEmptyRefString(item *string) *string {
 	return ToRefString(*item)
 }
 
+// Convert to given guard if empty string
+func GuardWith(item string, guard string) string {
+	if item == "" {
+		return guard
+	}
+	return item
+}
+
 // Convert to '.' if empty string
 func GuardDot(item string) string {
 	if item == "" {
