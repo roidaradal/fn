@@ -169,3 +169,10 @@ func MergeCounts[K comparable](counters []map[K]int) map[K]int {
 	}
 	return total
 }
+
+// Update the old counter with counts from new counter
+func UpdateCounts[K comparable](oldCounter, newCounter map[K]int) {
+	for key, count := range newCounter {
+		oldCounter[key] += count
+	}
+}

@@ -7,19 +7,20 @@ type Entry[K comparable, V any] struct {
 }
 
 type (
-	Object        = map[string]any
-	UintMap       = map[string]uint
-	IntMap        = map[string]int
-	BoolMap       = map[string]bool
-	StringMap     = map[string]string
-	StringListMap = map[string][]string
-	StringCounter = map[string]int
-	IntCounter    = map[int]int
+	Object                = map[string]any
+	UintMap               = map[string]uint
+	IntMap                = map[string]int
+	BoolMap               = map[string]bool
+	StringMap             = map[string]string
+	StringListMap         = map[string][]string
+	StringCounter         = map[string]int
+	IntCounter            = map[int]int
+	Counter[T comparable] = map[T]int
 )
 
 // Create new counter, with each item initialized to count=0
-func NewCounter[T comparable](items []T) map[T]int {
-	count := make(map[T]int, len(items))
+func NewCounter[T comparable](items []T) Counter[T] {
+	count := make(Counter[T], len(items))
 	for _, item := range items {
 		count[item] = 0
 	}
@@ -27,8 +28,8 @@ func NewCounter[T comparable](items []T) map[T]int {
 }
 
 // Create counter, with keys produced from keyFn
-func CounterFunc[T any, K comparable](items []T, key func(T) K) map[K]int {
-	count := make(map[K]int, len(items))
+func CounterFunc[T any, K comparable](items []T, key func(T) K) Counter[K] {
+	count := make(Counter[K], len(items))
 	for _, item := range items {
 		count[key(item)] += 1
 	}

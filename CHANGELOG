@@ -1,3 +1,7 @@
+v0.5.15 - dict.Counter 
+    x Commit: 2025-12-05 11:28
+    x dict.UpdateCounts
+    x dict.Counter type
 v0.5.14 - GuardWith
     x Commit: 2025-12-05 08:01
     x str.GuardWith
