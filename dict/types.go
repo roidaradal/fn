@@ -36,6 +36,13 @@ func CounterFunc[T any, K comparable](items []T, key func(T) K) Counter[K] {
 	return count
 }
 
+// Update the counter with the incoming items
+func UpdateCounter[T comparable](counter Counter[T], items []T) {
+	for _, item := range items {
+		counter[item] += 1
+	}
+}
+
 // Create new boolean map, with each item initialized to flag boolean
 func Flags[T comparable](items []T, flag bool) map[T]bool {
 	flags := make(map[T]bool)
