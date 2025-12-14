@@ -1,3 +1,6 @@
+v0.5.18 - Divide RoundRobin
+    x Commit: 2025-12-14 15:47
+    x list.DivideRoundRobin
 v0.5.17 - String Colors 
     x Commit: 2025-12-13 10:57
     x str.Red, Green, Yellow

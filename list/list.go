@@ -71,6 +71,20 @@ func Divide(numItems, numParts int) [][2]int {
 	return ranges
 }
 
+// Divides the items into parts using round-robin order.
+// Returns the divided items for each part
+func DivideRoundRobin[T any](items []T, numParts int) [][]T {
+	share := make([][]T, numParts)
+	for i := range numParts {
+		share[i] = make([]T, 0)
+	}
+	for i, item := range items {
+		partIdx := i % numParts
+		share[partIdx] = append(share[partIdx], item)
+	}
+	return share
+}
+
 // Tally the number of occurences of each item in the list
 func TallyItems[T comparable](items []T) map[T]int {
 	count := make(map[T]int)
