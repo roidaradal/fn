@@ -109,3 +109,12 @@ func Count[T comparable](items []T, value T) int {
 func Repeated[T any](value T, count int) []T {
 	return slices.Repeat([]T{value}, count)
 }
+
+// Creates a list of any items from given list
+func ToAny[T any](items []T) []any {
+	items2 := make([]any, len(items))
+	for i, item := range items {
+		items2[i] = item
+	}
+	return items2
+}
