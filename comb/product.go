@@ -1,4 +1,3 @@
-// Package comb contains combinatorics functions
 package comb
 
 import (
