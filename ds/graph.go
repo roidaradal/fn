@@ -212,6 +212,41 @@ func (g Graph) IsHamiltonianCycle(vertices []Vertex) bool {
 	return g.NeighborsOf[last].Has(first)
 }
 
+// Check if edge sequence is a valid Eulerian path
+func (g Graph) IsEulerianPath(edges []Edge) bool {
+	numEdges := len(edges)
+	if numEdges < 2 {
+		return false
+	}
+	visitCount := dict.NewCounter(g.Edges)
+	a1, b1 := edges[0].Tuple()
+	a2, b2 := edges[1].Tuple()
+	var tail Vertex
+	if a1 == a2 || b1 == a2 {
+		tail = b2
+	} else if a1 == b2 || b1 == b2 {
+		tail = a2
+	} else {
+		return false
+	}
+	visitCount[edges[0]] += 1
+	visitCount[edges[1]] += 1
+	for _, edge := range edges[2:] {
+		visitCount[edge] += 1
+		a, b := edge.Tuple()
+		switch tail {
+		case a:
+			tail = b
+		case b:
+			tail = a
+		default:
+			return false
+		}
+	}
+	// Check that all edges visited exactly once
+	return list.AllEqual(dict.Values(visitCount), 1)
+}
+
 // Perform BFS traversal on the graph, starting at given vertex,
 // considering the active edge set, return list of vertices visited
 func (g Graph) BFSTraversal(start Vertex, activeEdges EdgeSet) []Vertex {
