@@ -1,3 +1,7 @@
+v0.5.27 - graph.IsEulerianCycle 
+    x Commit: 2025-12-31 15:18
+    x graph.IsEulerianCycle
+    x Adjust IsEulerianPath to include (head, tail) info
 v0.5.26 - graph.IsEulerianPath 
     x Commit: 2025-12-31 14:26
     x graph.IsEulerianPath

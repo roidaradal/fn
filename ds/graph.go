@@ -213,21 +213,30 @@ func (g Graph) IsHamiltonianCycle(vertices []Vertex) bool {
 }
 
 // Check if edge sequence is a valid Eulerian path
-func (g Graph) IsEulerianPath(edges []Edge) bool {
+func (g Graph) IsEulerianPath(edges []Edge) (bool, [2]Vertex) {
+	var pair [2]Vertex
 	numEdges := len(edges)
 	if numEdges < 2 {
-		return false
+		return false, pair
 	}
 	visitCount := dict.NewCounter(g.Edges)
 	a1, b1 := edges[0].Tuple()
 	a2, b2 := edges[1].Tuple()
-	var tail Vertex
-	if a1 == a2 || b1 == a2 {
+	var head, tail Vertex
+	if a1 == a2 {
+		head = b1
 		tail = b2
-	} else if a1 == b2 || b1 == b2 {
+	} else if b1 == a2 {
+		head = a1
+		tail = b2
+	} else if a1 == b2 {
+		head = b1
+		tail = a2
+	} else if b1 == b2 {
+		head = a1
 		tail = a2
 	} else {
-		return false
+		return false, pair
 	}
 	visitCount[edges[0]] += 1
 	visitCount[edges[1]] += 1
@@ -240,11 +249,23 @@ func (g Graph) IsEulerianPath(edges []Edge) bool {
 		case b:
 			tail = a
 		default:
-			return false
+			return false, pair
 		}
 	}
 	// Check that all edges visited exactly once
-	return list.AllEqual(dict.Values(visitCount), 1)
+	return list.AllEqual(dict.Values(visitCount), 1), [2]Vertex{head, tail}
+}
+
+// Check if edge sequence is a valid Eulerian cycle
+func (g Graph) IsEulerianCycle(edges []Edge) bool {
+	// Check if vertices form an Eulerian path
+	ok, pair := g.IsEulerianPath(edges)
+	if !ok {
+		return false
+	}
+	head, tail := pair[0], pair[1]
+	// Check if there is an edge to connect the head and tail vertices
+	return g.NeighborsOf[tail].Has(head)
 }
 
 // Perform BFS traversal on the graph, starting at given vertex,
