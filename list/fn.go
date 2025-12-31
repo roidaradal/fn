@@ -85,3 +85,12 @@ func Deduplicate[T comparable](items []T) []T {
 	}
 	return unique
 }
+
+// Apply reduce function to each item
+func Reduce[T any](items []T, reduce func(T, T) T, initial T) T {
+	current := initial
+	for _, item := range items {
+		current = reduce(current, item)
+	}
+	return current
+}

@@ -1,3 +1,7 @@
+v0.5.23 - list.Reduce
+    x Commit: 2025-12-31 12:02
+    x list.Reduce
+    x Fix graph.IsDominatingSet
 v0.5.22 - graph.IsDominatingSet 
     x Commit: 2025-12-31 11:37
     x graph.IsDominatingSet

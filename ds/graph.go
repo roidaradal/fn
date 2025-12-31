@@ -165,8 +165,11 @@ func (g Graph) IsIndependentSet(vertices []Vertex) bool {
 
 // Check if list of vertices forms a dominating set
 func (g Graph) IsDominatingSet(vertices []Vertex) bool {
+	if len(vertices) == 0 {
+		return false
+	}
 	vertexSet := SetFrom(vertices)
-	for _, vertex := range vertices {
+	for _, vertex := range g.Vertices {
 		adjacent := SetFrom(g.Neighbors(vertex))
 		adjacent.Add(vertex)
 		if vertexSet.Intersection(adjacent).IsEmpty() {
