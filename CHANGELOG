@@ -1,3 +1,6 @@
+v0.5.22 - graph.IsDominatingSet 
+    x Commit: 2025-12-31 11:37
+    x graph.IsDominatingSet
 v0.5.21 - ArgMax and ArgMin 
     x Commit: 2025-12-31 08:05
     x list.ArgMax, ArgMin 

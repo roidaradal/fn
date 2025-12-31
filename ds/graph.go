@@ -163,6 +163,19 @@ func (g Graph) IsIndependentSet(vertices []Vertex) bool {
 	return true
 }
 
+// Check if list of vertices forms a dominating set
+func (g Graph) IsDominatingSet(vertices []Vertex) bool {
+	vertexSet := SetFrom(vertices)
+	for _, vertex := range vertices {
+		adjacent := SetFrom(g.Neighbors(vertex))
+		adjacent.Add(vertex)
+		if vertexSet.Intersection(adjacent).IsEmpty() {
+			return false
+		}
+	}
+	return true
+}
+
 // Perform BFS traversal on the graph, starting at given vertex,
 // considering the active edge set, return list of vertices visited
 func (g Graph) BFSTraversal(start Vertex, activeEdges EdgeSet) []Vertex {
