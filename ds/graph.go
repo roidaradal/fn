@@ -184,6 +184,9 @@ func (g Graph) IsDominatingSet(vertices []Vertex) bool {
 // Check if vertex path is a valid Hamiltonian path
 func (g Graph) IsHamiltonianPath(vertices []Vertex) bool {
 	numVertices := len(vertices)
+	if numVertices == 0 {
+		return false
+	}
 	visitCount := dict.NewCounter(g.Vertices)
 	for i := range numVertices - 1 {
 		curr, next := vertices[i], vertices[i+1]
@@ -196,6 +199,17 @@ func (g Graph) IsHamiltonianPath(vertices []Vertex) bool {
 	visitCount[last] += 1
 	// Check that all vertices visited exactly once
 	return list.AllEqual(dict.Values(visitCount), 1)
+}
+
+// Check if vertex path is a valid Hamiltonian cycle
+func (g Graph) IsHamiltonianCycle(vertices []Vertex) bool {
+	// Check if vertices form a Hamiltonian path
+	if !g.IsHamiltonianPath(vertices) {
+		return false
+	}
+	// Check if there is an edge to connect last vertex and first vertex
+	first, last := vertices[0], list.Last(vertices, 1)
+	return g.NeighborsOf[last].Has(first)
 }
 
 // Perform BFS traversal on the graph, starting at given vertex,
