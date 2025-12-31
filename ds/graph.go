@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/roidaradal/fn/dict"
+	"github.com/roidaradal/fn/list"
 	"github.com/roidaradal/fn/str"
 )
 
@@ -177,6 +179,23 @@ func (g Graph) IsDominatingSet(vertices []Vertex) bool {
 		}
 	}
 	return true
+}
+
+// Check if vertex path is a valid Hamiltonian path
+func (g Graph) IsHamiltonianPath(vertices []Vertex) bool {
+	numVertices := len(vertices)
+	visitCount := dict.NewCounter(g.Vertices)
+	for i := range numVertices - 1 {
+		curr, next := vertices[i], vertices[i+1]
+		if g.NeighborsOf[curr].HasNo(next) {
+			return false // invalid path if no edge from curr => next
+		}
+		visitCount[curr] += 1
+	}
+	last := vertices[numVertices-1]
+	visitCount[last] += 1
+	// Check that all vertices visited exactly once
+	return list.AllEqual(dict.Values(visitCount), 1)
 }
 
 // Perform BFS traversal on the graph, starting at given vertex,
