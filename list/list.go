@@ -2,6 +2,7 @@
 package list
 
 import (
+	"cmp"
 	"math/rand/v2"
 	"slices"
 )
@@ -117,4 +118,35 @@ func ToAny[T any](items []T) []any {
 		items2[i] = item
 	}
 	return items2
+}
+
+// Get the index of the min item
+func ArgMin[T cmp.Ordered](items []T) int {
+	index, currMin := 0, items[0]
+	for i := 1; i < len(items); i++ {
+		if items[i] < currMin {
+			index, currMin = i, items[i]
+		}
+	}
+	return index
+}
+
+// Get the index of the max item
+func ArgMax[T cmp.Ordered](items []T) int {
+	index, currMax := 0, items[0]
+	for i := 1; i < len(items); i++ {
+		if items[i] > currMax {
+			index, currMax = i, items[i]
+		}
+	}
+	return index
+}
+
+// Return map of item => index, loses data if items are not unique
+func IndexMap[T comparable](items []T) map[T]int {
+	index := make(map[T]int)
+	for i, item := range items {
+		index[item] = i
+	}
+	return index
 }
