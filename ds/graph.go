@@ -264,8 +264,7 @@ func (g Graph) IsEulerianCycle(edges []Edge) bool {
 		return false
 	}
 	head, tail := pair[0], pair[1]
-	// Check if there is an edge to connect the head and tail vertices
-	return g.NeighborsOf[tail].Has(head)
+	return head == tail
 }
 
 // Perform BFS traversal on the graph, starting at given vertex,

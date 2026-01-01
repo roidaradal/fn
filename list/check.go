@@ -1,6 +1,9 @@
 package list
 
-import "slices"
+import (
+	"cmp"
+	"slices"
+)
 
 // Check if list is empty
 func IsEmpty[T any](items []T) bool {
@@ -92,4 +95,37 @@ func AllSame[T comparable](items []T) bool {
 // Check if all list items are unique
 func AllUnique[T comparable](items []T) bool {
 	return len(TallyItems(items)) == len(items)
+}
+
+// Check if all list items are not equal to the given value
+func AllNotEqual[T comparable](items []T, value T) bool {
+	return !slices.Contains(items, value)
+}
+
+// Check if all list items are greater than given value
+func AllGreater[T cmp.Ordered](items []T, value T) bool {
+	return All(items, func(x T) bool {
+		return x > value
+	})
+}
+
+// Check if all list items are greater or equal than given value
+func AllGreaterEqual[T cmp.Ordered](items []T, value T) bool {
+	return All(items, func(x T) bool {
+		return x >= value
+	})
+}
+
+// Check if all list items are lesser than given value
+func AllLess[T cmp.Ordered](items []T, value T) bool {
+	return All(items, func(x T) bool {
+		return x < value
+	})
+}
+
+// Check if all list items are lesser or equal than given value
+func AllLessEqual[T cmp.Ordered](items []T, value T) bool {
+	return All(items, func(x T) bool {
+		return x <= value
+	})
 }
