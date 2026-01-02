@@ -31,6 +31,12 @@ func NewEdge(edge string) Edge {
 	return Edge{parts[0], parts[1]}
 }
 
+// Create new directed Edge from v1->v2 string
+func NewDirectedEdge(edge string) Edge {
+	parts := str.CleanSplit(edge, "->")
+	return Edge{parts[0], parts[1]}
+}
+
 // Edge string representation
 func (e Edge) String() string {
 	return fmt.Sprintf("%s-%s", e[0], e[1])
@@ -53,7 +59,7 @@ func NewGraph() *Graph {
 	}
 }
 
-// Create graph from vertices (separated by whitespace),
+// Create undirected graph from vertices (separated by whitespace),
 // and edgePairs (v1-v2 edges separated by whitespace)
 func GraphFrom(vertices, edgePairs string) *Graph {
 	g := NewGraph()
@@ -62,9 +68,23 @@ func GraphFrom(vertices, edgePairs string) *Graph {
 		g.IndexOf[vertex] = i
 	}
 	for edgePair := range strings.FieldsSeq(edgePairs) {
-		edge := NewEdge(edgePair)
-		v1, v2 := edge.Tuple()
+		v1, v2 := NewEdge(edgePair).Tuple()
 		g.AddUndirectedEdge(v1, v2)
+	}
+	return g
+}
+
+// Create directed graph from vertices (separated by whitespace),
+// and edgePairs (v1->v2 edges separated by whitespace)
+func DirectedGraphFrom(vertices, edgePairs string) *Graph {
+	g := NewGraph()
+	g.Vertices = strings.Fields(vertices)
+	for i, vertex := range g.Vertices {
+		g.IndexOf[vertex] = i
+	}
+	for edgePair := range strings.FieldsSeq(edgePairs) {
+		v1, v2 := NewDirectedEdge(edgePair).Tuple()
+		g.AddDirectedEdge(v1, v2)
 	}
 	return g
 }
