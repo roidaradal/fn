@@ -87,3 +87,15 @@ func DurationSince(datetime string, round time.Duration) (string, error) {
 	duration := Now().Sub(dt).Round(round)
 	return fmt.Sprintf("%v", duration), nil
 }
+
+// Extracts time from datetime string
+func ExtractTime(datetime string) string {
+	if !IsValidDateTime(datetime) {
+		return ""
+	}
+	parts := strings.Fields(datetime)
+	if len(parts) != 2 {
+		return ""
+	}
+	return parts[1]
+}
