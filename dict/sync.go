@@ -1,6 +1,9 @@
 package dict
 
-import "sync"
+import (
+	"maps"
+	"sync"
+)
 
 // Concurrency-safe generic map
 type SyncMap[K comparable, V any] struct {
@@ -59,6 +62,16 @@ func (sm *SyncMap[K, V]) Map() map[K]V {
 	sm.mu.RLock()
 	defer sm.mu.RUnlock()
 	return sm.data
+}
+
+// Copy SyncMap's underlying map and clear it
+func (sm *SyncMap[K, V]) ClearMap() map[K]V {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	data := make(map[K]V)
+	maps.Copy(data, sm.data)
+	clear(sm.data)
+	return data
 }
 
 // SyncMap's underlying map keys
