@@ -88,6 +88,15 @@ func DurationSince(datetime string, round time.Duration) (string, error) {
 	return fmt.Sprintf("%v", duration), nil
 }
 
+// Calculate duration since given datetime
+func ElapsedSince(datetime string) (time.Duration, error) {
+	dt, err := ParseDateTime(datetime)
+	if err != nil {
+		return 0, err
+	}
+	return Now().Sub(dt), nil
+}
+
 // Extracts time from datetime string
 func ExtractTime(datetime string) string {
 	if !IsValidDateTime(datetime) {
