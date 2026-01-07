@@ -4,6 +4,7 @@ package comb
 import (
 	"iter"
 
+	"github.com/roidaradal/fn/list"
 	"gonum.org/v1/gonum/stat/combin"
 )
 
@@ -64,6 +65,23 @@ func AllCombinations[T any](items []T) iter.Seq2[int, []T] {
 					return
 				}
 				i += 1
+			}
+		}
+	}
+}
+
+// Generator for all size Permutation Positions of items (-1 if not in permutation)
+func AllPermutationPositions[T any](items []T) iter.Seq2[int, []int] {
+	return func(yield func(int, []int) bool) {
+		numItems := len(items)
+		indexes := list.NumRange(0, numItems)
+		for i, combo := range AllPermutations(indexes) {
+			pos := list.Repeated(-1, numItems)
+			for p, value := range combo {
+				pos[value] = p
+			}
+			if !yield(i, pos) {
+				return
 			}
 		}
 	}
