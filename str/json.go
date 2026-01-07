@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+var indentLength int = 2
+
 // Create JSON string from struct
 func JSON[T any](item T) (string, error) {
 	bytes, err := MarshalJSON(item, 0)
@@ -28,6 +30,11 @@ func MarshalJSON[T any](item T, indent int) ([]byte, error) {
 	if indent <= 0 {
 		return json.Marshal(item)
 	} else {
-		return json.MarshalIndent(item, "", strings.Repeat("  ", indent))
+		return json.MarshalIndent(item, "", strings.Repeat(" ", indentLength*indent))
 	}
+}
+
+// Set JSON indent length
+func SetJSONIndentLength(length int) {
+	indentLength = length
 }
