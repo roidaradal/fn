@@ -33,6 +33,15 @@ func RangeProduct[T any](start, end int, domains ...[]T) iter.Seq2[int, []T] {
 	}
 }
 
+// Compute N factorial
+func Factorial(n int) int {
+	product := 1
+	for i := 2; i <= n; i++ {
+		product *= i
+	}
+	return product
+}
+
 // Utility: computes the Cartesian product combination from given domains for given index
 func productDomainCombo[T any](domains [][]T, sizes []int, index int) []T {
 	numSizes := len(sizes)

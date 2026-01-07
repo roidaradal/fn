@@ -1,3 +1,9 @@
+v0.5.33 - Permutations & Combinations 
+    x Commit: 2026-01-07 13:50
+    x NumPermutations, NumCombinations
+    x AllPermutations, AllCombinations
+    x comb.Factorial
+    x Implement Permutations and Combinations using Generators
 v0.5.32 - SetJSONIndentLength
     x Commit: 2026-01-07 11:30
     x str.SetJSONIndentLength

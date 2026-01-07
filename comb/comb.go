@@ -9,24 +9,77 @@ import (
 
 // Generator for N-permutations of items]
 func Permutations[T any](items []T, take int) iter.Seq2[int, []T] {
-	return comboIterator(items, take, combin.Permutations)
-}
-
-// Generator for N-combinations of items
-func Combinations[T any](items []T, take int) iter.Seq2[int, []T] {
-	return comboIterator(items, take, combin.Combinations)
-}
-
-// Common: Iterator for permutation / combinations
-func comboIterator[T any](items []T, take int, comboFn func(int, int) [][]int) iter.Seq2[int, []T] {
 	return func(yield func(int, []T) bool) {
-		for i, indexes := range comboFn(len(items), take) {
+		gen := combin.NewPermutationGenerator(len(items), take)
+		i := 0
+		for gen.Next() {
+			indexes := gen.Permutation(nil)
 			combo := createCombo(items, indexes)
 			if !yield(i, combo) {
 				return
 			}
+			i += 1
 		}
 	}
+}
+
+// Generator for N-combinations of items
+func Combinations[T any](items []T, take int) iter.Seq2[int, []T] {
+	return func(yield func(int, []T) bool) {
+		gen := combin.NewCombinationGenerator(len(items), take)
+		i := 0
+		for gen.Next() {
+			indexes := gen.Combination(nil)
+			combo := createCombo(items, indexes)
+			if !yield(i, combo) {
+				return
+			}
+			i += 1
+		}
+	}
+}
+
+// Generator for all size Permutation of items
+func AllPermutations[T any](items []T) iter.Seq2[int, []T] {
+	return func(yield func(int, []T) bool) {
+		i := 0
+		for take := range len(items) + 1 {
+			for _, combo := range Permutations(items, take) {
+				if !yield(i, combo) {
+					return
+				}
+				i += 1
+			}
+		}
+	}
+}
+
+// Generator for all size Combination of items
+func AllCombinations[T any](items []T) iter.Seq2[int, []T] {
+	return func(yield func(int, []T) bool) {
+		i := 0
+		for take := range len(items) + 1 {
+			for _, combo := range Combinations(items, take) {
+				if !yield(i, combo) {
+					return
+				}
+				i += 1
+			}
+		}
+	}
+}
+
+// Count permutations(numItems, take)
+func NumPermutations(numItems, take int) int {
+	return combin.NumPermutations(numItems, take)
+}
+
+// Count combinations(numItems, take)
+func NumCombinations(numItems, take int) int {
+	numerator := Factorial(numItems)
+	denom1 := Factorial(take)
+	denom2 := Factorial(numItems - take)
+	return numerator / (denom1 * denom2)
 }
 
 // Common: create combination from items and indexes
