@@ -11,6 +11,18 @@ func SaveString(text, path string) error {
 	return os.WriteFile(path, []byte(text), defaultFileMode)
 }
 
+// Append string to given file path
+func AppendString(text, path string) error {
+	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE, defaultFileMode)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(text)
+	return err
+}
+
 // Save JSON object to given file path
 func SaveJSON[T any](item T, path string) error {
 	return saveJSON(item, path, 0)
