@@ -35,11 +35,7 @@ func RangeProduct[T any](start, end int, domains ...[]T) iter.Seq2[int, []T] {
 
 // Compute N factorial
 func Factorial(n int) int {
-	product := 1
-	for i := 2; i <= n; i++ {
-		product *= i
-	}
-	return product
+	return list.Product(list.NumRange(1, n+1))
 }
 
 // Utility: computes the Cartesian product combination from given domains for given index
