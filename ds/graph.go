@@ -201,6 +201,22 @@ func (g Graph) IsDominatingSet(vertices []Vertex) bool {
 	return true
 }
 
+// Check if list of edges forms an edge dominating set
+func (g Graph) IsEdgeDominatingSet(edges []Edge) bool {
+	// Mark vertex endpoints of given edges as covered
+	covered := NewSet[Vertex]()
+	for _, edge := range edges {
+		v1, v2 := edge.Tuple()
+		covered.Add(v1)
+		covered.Add(v2)
+	}
+	// Check that for all edges, at least one endpoint is in covered vertices
+	return list.All(g.Edges, func(edge Edge) bool {
+		v1, v2 := edge.Tuple()
+		return covered.Has(v1) || covered.Has(v2)
+	})
+}
+
 // Check if vertex path is a valid Hamiltonian path
 func (g Graph) IsHamiltonianPath(vertices []Vertex) bool {
 	numVertices := len(vertices)
