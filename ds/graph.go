@@ -191,14 +191,25 @@ func (g Graph) IsDominatingSet(vertices []Vertex) bool {
 		return false
 	}
 	vertexSet := SetFrom(vertices)
-	for _, vertex := range g.Vertices {
+	return list.All(g.Vertices, func(vertex Vertex) bool {
 		adjacent := SetFrom(g.Neighbors(vertex))
 		adjacent.Add(vertex)
-		if vertexSet.Intersection(adjacent).IsEmpty() {
-			return false
-		}
+		return vertexSet.Intersection(adjacent).NotEmpty()
+	})
+}
+
+// Check if list of vertices forms an efficient dominating set
+func (g Graph) IsEfficientDominatingSet(vertices []Vertex) bool {
+	if len(vertices) == 0 {
+		return false
 	}
-	return true
+	vertexSet := SetFrom(vertices)
+	return list.All(g.Vertices, func(vertex Vertex) bool {
+		// Check that all vertices are only dominated by exactly one vertex in the set
+		adjacent := SetFrom(g.Neighbors(vertex))
+		adjacent.Add(vertex)
+		return vertexSet.Intersection(adjacent).Len() == 1
+	})
 }
 
 // Check if list of edges forms an edge dominating set

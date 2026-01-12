@@ -1,3 +1,7 @@
+v0.5.40 - graph.IsEfficientDominatingSet 
+    x Commit: 2026-01-12 21:14
+    x graph.IsEfficientDominatingSet
+    x Adjust IsDominatingSet implementation
 v0.5.39 - graph.IsEdgeDominatingSet 
     x Commit: 2026-01-12 20:52 
     x graph.IsEdgeDominatingSet
