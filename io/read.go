@@ -49,6 +49,15 @@ func ReadNonEmptyLines(path string) ([]string, error) {
 	return lines, nil
 }
 
+// Count non-empty lines of given text file path
+func CountNonEmptyLines(path string) (int, error) {
+	lines, err := ReadNonEmptyLines(path)
+	if err != nil {
+		return 0, err
+	}
+	return len(lines), nil
+}
+
 // Read rows of given CSV file path
 func ReadCSV(path string) ([][]string, error) {
 	lines, err := ReadNonEmptyLines(path)
