@@ -125,3 +125,12 @@ func TrimLeftSpace(text string) string {
 func TrimRightSpace(text string) string {
 	return strings.TrimRightFunc(text, unicode.IsSpace)
 }
+
+// Try to get the nth part of the string split by separator
+func TryGetPart(text, sep string, index int) (string, bool) {
+	parts := strings.Split(text, sep)
+	if len(parts) < index+1 {
+		return "", false
+	}
+	return parts[index], true
+}
