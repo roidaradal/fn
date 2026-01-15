@@ -160,6 +160,11 @@ func (g Graph) EdgeWeight(edge Edge) (float64, bool) {
 	return weight, ok
 }
 
+// Get edge names
+func (g Graph) EdgeNames() []string {
+	return list.Map(g.Edges, Edge.String)
+}
+
 // Check if list of vertices forms a clique
 func (g Graph) IsClique(vertices []Vertex) bool {
 	vertexSet := SetFrom(vertices)
