@@ -3,9 +3,7 @@ package io
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 )
 
 const defaultFileMode os.FileMode = 0o666
@@ -28,18 +26,4 @@ func PathExists(path string) bool {
 // Creates all non-existent folders in given path
 func EnsurePathExists(path string) error {
 	return os.MkdirAll(filepath.Dir(path), defaultFileMode)
-}
-
-// Opens file using default viewer
-func OpenFile(path string) error {
-	var cmd *exec.Cmd
-	switch runtime.GOOS {
-	case "windows":
-		cmd = exec.Command("cmd", "/c", "start", path)
-	case "darwin":
-		cmd = exec.Command("open", path)
-	default:
-		cmd = exec.Command("xdg-open", path)
-	}
-	return cmd.Start()
 }
