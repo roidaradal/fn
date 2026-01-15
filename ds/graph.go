@@ -335,3 +335,21 @@ func (g Graph) BFSTraversal(start Vertex, activeEdges EdgeSet) []Vertex {
 	}
 	return visited.Items()
 }
+
+// Perform BFS traversal multiple times to discover the connected components
+// of the graph, considering the active edge set, return list of components
+func (g Graph) ConnectedComponents(activeEdges EdgeSet) [][]Vertex {
+	covered := dict.Flags(g.Vertices, false)
+	components := make([][]Vertex, 0)
+	for _, vertex := range g.Vertices {
+		if covered[vertex] {
+			continue // skip if already covered
+		}
+		component := g.BFSTraversal(vertex, activeEdges)
+		components = append(components, component)
+		for _, v := range component {
+			covered[v] = true
+		}
+	}
+	return components
+}
