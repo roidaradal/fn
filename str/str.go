@@ -134,3 +134,8 @@ func TryGetPart(text, sep string, index int) (string, bool) {
 	}
 	return parts[index], true
 }
+
+// Wrap error with prefix error message
+func WrapError(message string, err error) error {
+	return fmt.Errorf("%s: %w", message, err)
+}
