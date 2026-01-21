@@ -31,6 +31,15 @@ func CleanSplit(text, sep string) []string {
 	return parts
 }
 
+// Split the text by separator, maximum of N parts, trim each part's extra whitespace
+func CleanSplitN(text, sep string, count int) []string {
+	parts := strings.SplitN(text, sep, count)
+	for i, part := range parts {
+		parts[i] = strings.TrimSpace(part)
+	}
+	return parts
+}
+
 // Split text by whitespace
 func SpaceSplit(text string) []string {
 	return strings.Fields(strings.TrimSpace(text))
