@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strings"
 )
 
 // Clear screen
@@ -32,4 +33,24 @@ func OpenFile(path string) error {
 		cmd = exec.Command("xdg-open", path)
 	}
 	return cmd.Start()
+}
+
+// Get command and options
+func GetCommandOptions(defaultCommand string) (string, map[string]string) {
+	args := os.Args[1:]
+	if len(args) < 1 {
+		args = append(args, defaultCommand)
+	}
+	command := strings.ToLower(args[0])
+	options := make(map[string]string)
+	for _, pair := range args[1:] {
+		parts := strings.SplitN(pair, "=", 2)
+		key := strings.ToLower(parts[0])
+		value := ""
+		if len(parts) == 2 {
+			value = parts[1]
+		}
+		options[key] = value
+	}
+	return command, options
 }
