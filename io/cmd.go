@@ -10,9 +10,11 @@ import (
 
 // Clear screen
 func ClearScreen() {
-	cmd := exec.Command("cmd", "/c", "cls")
-	cmd.Stdout = os.Stdout
-	cmd.Run()
+	command := "clear"
+	if runtime.GOOS == "windows" {
+		command = "cls"
+	}
+	RunCommand(command)
 }
 
 // Soft Clear Screen
@@ -33,6 +35,21 @@ func OpenFile(path string) error {
 		cmd = exec.Command("xdg-open", path)
 	}
 	return cmd.Start()
+}
+
+// Run command line command
+func RunCommand(args ...string) {
+	var cmd *exec.Cmd
+	switch runtime.GOOS {
+	case "windows":
+		args = append([]string{"/c"}, args...)
+		cmd = exec.Command("cmd", args...)
+	default:
+		args = append([]string{"-c"}, args...)
+		cmd = exec.Command("sh", args...)
+	}
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
 
 // Get command and options
