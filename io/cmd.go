@@ -38,7 +38,7 @@ func OpenFile(path string) error {
 }
 
 // Run command line command
-func RunCommand(args ...string) {
+func RunCommand(args ...string) error {
 	var cmd *exec.Cmd
 	switch runtime.GOOS {
 	case "windows":
@@ -49,7 +49,20 @@ func RunCommand(args ...string) {
 		cmd = exec.Command("sh", args...)
 	}
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	return cmd.Run()
+}
+
+// Run go install <path>
+func RunGoInstall(path string) error {
+	cmd1, cmd2 := "go", "install"
+	fmt.Printf("Running: %s %s %s ... ", cmd1, cmd2, path)
+	err := RunCommand(cmd1, cmd2, path)
+	if err != nil {
+		fmt.Println("FAIL")
+		return err
+	}
+	fmt.Println("OK")
+	return nil
 }
 
 // Get command and options
