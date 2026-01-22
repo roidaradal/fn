@@ -108,3 +108,8 @@ func UpperDot(item string) string {
 func LowerDot(item string) string {
 	return strings.ToLower(GuardDot(item))
 }
+
+// Convert to byte slice
+func ToBytes(text string) []byte {
+	return []byte(text)
+}
