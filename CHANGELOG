@@ -1,3 +1,6 @@
+v0.5.54 - list.MapIf 
+    x Commit: 2026-01-30 10:58
+    x list.MapIf
 v0.5.53 - Fix SyncMap Map method 
     x Commit: 2026-01-28 16:43 
     x Fix SyncMap.Map() method

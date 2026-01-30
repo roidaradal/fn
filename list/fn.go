@@ -9,6 +9,19 @@ func Map[T, V any](items []T, convert func(T) V) []V {
 	return results
 }
 
+// Apply convert function to each list item, but only if second result is true, return mapped & filtered items
+func MapIf[T, V any](items []T, convert func(T) (V, bool)) []V {
+	results := make([]V, 0, len(items))
+	for _, item := range items {
+		item2, ok := convert(item)
+		if !ok {
+			continue
+		}
+		results = append(results, item2)
+	}
+	return results
+}
+
 // Apply convert function to each list item with index, return mapped items
 func IndexedMap[T, V any](items []T, convert func(int, T) V) []V {
 	results := make([]V, len(items))
