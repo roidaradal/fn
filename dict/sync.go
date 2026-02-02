@@ -59,8 +59,8 @@ func (sm *SyncMap[K, V]) Len() int {
 
 // SyncMap's underlying map
 func (sm *SyncMap[K, V]) Map() map[K]V {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
+	sm.mu.RLock()
+	defer sm.mu.RUnlock()
 	data := make(map[K]V)
 	maps.Copy(data, sm.data)
 	return data

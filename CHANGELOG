@@ -1,3 +1,7 @@
+v0.5.57 - SyncList and SyncMap Update  
+    x Commit: 2026-02-02 14:37
+    x Fix: SyncList.Items() - use RLock 
+    x Fix: SyncMap.Map() - use RLock
 v0.5.56 - SyncList 
     x Commit: 2026-02-02 13:35
     x list.SyncList

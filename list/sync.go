@@ -41,8 +41,8 @@ func (sl *SyncList[T]) Len() int {
 
 // SyncList underlying items
 func (sl *SyncList[T]) Items() []T {
-	sl.mu.Lock()
-	defer sl.mu.Unlock()
+	sl.mu.RLock()
+	defer sl.mu.RUnlock()
 	return Copy(sl.items)
 }
 
