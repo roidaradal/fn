@@ -19,10 +19,10 @@ func SyncListFrom[T any](items []T) *SyncList[T] {
 }
 
 // SyncList.Append
-func (sl *SyncList[T]) Append(item T) {
+func (sl *SyncList[T]) Append(items ...T) {
 	sl.mu.Lock()
 	defer sl.mu.Unlock()
-	sl.items = append(sl.items, item)
+	sl.items = append(sl.items, items...)
 }
 
 // SyncList.Clear

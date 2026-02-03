@@ -1,3 +1,7 @@
+v0.5.58 - SyncMap.DeleteKeys
+    x Commit: 2026-02-03 10:30
+    x SyncMap.DeleteKeys
+    x Update SyncList.Append to accept varargs
 v0.5.57 - SyncList and SyncMap Update  
     x Commit: 2026-02-02 14:37
     x Fix: SyncList.Items() - use RLock 

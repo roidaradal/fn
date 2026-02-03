@@ -43,6 +43,15 @@ func (sm *SyncMap[K, V]) Delete(key K) {
 	delete(sm.data, key)
 }
 
+// SyncMap.DeleteKeys
+func (sm *SyncMap[K, V]) DeleteKeys(keys []K) {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	for _, key := range keys {
+		delete(sm.data, key)
+	}
+}
+
 // Clear SyncMap's underlying map data
 func (sm *SyncMap[K, V]) Clear() {
 	sm.mu.Lock()
