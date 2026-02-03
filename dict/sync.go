@@ -36,6 +36,18 @@ func (sm *SyncMap[K, V]) Set(key K, value V) {
 	sm.data[key] = value
 }
 
+// SyncMap.SetIf
+func (sm *SyncMap[K, V]) SetIf(key K, value V, isValid func(V) bool) bool {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	currValue, ok := sm.data[key]
+	if ok && !isValid(currValue) {
+		return false
+	}
+	sm.data[key] = value
+	return true
+}
+
 // SyncMap.Delete
 func (sm *SyncMap[K, V]) Delete(key K) {
 	sm.mu.Lock()
