@@ -4,6 +4,7 @@ package io
 import (
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const defaultFileMode os.FileMode = 0o666
@@ -26,4 +27,10 @@ func PathExists(path string) bool {
 // Creates all non-existent folders in given path
 func EnsurePathExists(path string) error {
 	return os.MkdirAll(filepath.Dir(path), defaultFileMode)
+}
+
+// Gets the filename without extension
+func BaseFileName(path string) string {
+	filename := filepath.Base(path)
+	return strings.TrimSuffix(filename, filepath.Ext(filename))
 }

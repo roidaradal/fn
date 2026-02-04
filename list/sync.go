@@ -29,7 +29,7 @@ func (sl *SyncList[T]) Append(items ...T) {
 func (sl *SyncList[T]) Clear() {
 	sl.mu.Lock()
 	defer sl.mu.Unlock()
-	clear(sl.items)
+	sl.items = make([]T, 0)
 }
 
 // SyncList number of items
@@ -51,6 +51,6 @@ func (sl *SyncList[T]) ClearItems() []T {
 	sl.mu.Lock()
 	defer sl.mu.Unlock()
 	items := Copy(sl.items)
-	clear(sl.items)
+	sl.items = make([]T, 0)
 	return items
 }
