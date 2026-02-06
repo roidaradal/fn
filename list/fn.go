@@ -107,3 +107,13 @@ func Reduce[T any](items []T, reduce func(T, T) T, initial T) T {
 	}
 	return current
 }
+
+// Group items using the key function
+func GroupBy[T any, K comparable](items []T, keyFn func(T) K) map[K][]T {
+	group := make(map[K][]T)
+	for _, item := range items {
+		key := keyFn(item)
+		group[key] = append(group[key], item)
+	}
+	return group
+}
