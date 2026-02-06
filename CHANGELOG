@@ -1,3 +1,6 @@
+v0.5.61 - clock.Parse 
+    x Commit: 2026-02-06 14:34 
+    x clock.Parse
 v0.5.60 - SyncList.Clear Fix 
     x Commit: 2026-02-04 12:05
     x Fix SyncList.Clear, ClearItems: reset to new slice 

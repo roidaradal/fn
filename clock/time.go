@@ -40,6 +40,12 @@ func TimestampNow() string {
 	return TimestampFormat(Now())
 }
 
+// Parse given string as datetime in given format, in current timezone
+func Parse(datetime, format string) (time.Time, error) {
+	datetime = strings.TrimSpace(datetime)
+	return time.ParseInLocation(format, datetime, CurrentTimezone())
+}
+
 // Parse given string as datetime in standard format, in current timezone
 func ParseDateTime(datetime string) (time.Time, error) {
 	datetime = strings.TrimSpace(datetime)
