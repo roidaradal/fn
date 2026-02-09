@@ -10,3 +10,8 @@ func FromErrors(label string, errs []error) error {
 	}
 	return fmt.Errorf("%s: %d errors encountered: %w", label, len(errs), errs[0])
 }
+
+// Initialization produces an error message for failing initialization process
+func Initialization(label string, err error) error {
+	return fmt.Errorf("%s: failed to initialize: %w", label, err)
+}
