@@ -1,3 +1,6 @@
+v0.5.64 - Common Fail Errors 
+    x Commit: 2026-02-09 14:55
+    x Add common error messages to fail
 v0.5.63 - fail.FromErrors
     x Commit: 2026-02-09 14:39 
     x fail.FromErrors
