@@ -2,7 +2,9 @@ package dict
 
 import (
 	"encoding/json"
+	"fmt"
 	"maps"
+	"strings"
 )
 
 // Add entries of new map into old map, returns old map.
@@ -85,6 +87,23 @@ func GroupByValueList[K, V comparable](items map[K][]V) map[V][]K {
 // Create Object from given struct pointer
 func ToObject[T any](structRef *T) (Object, error) {
 	return FromStruct[T, any](structRef)
+}
+
+// Inspect displays a struct as key-value pairs per line
+func Inspect[T any](structRef *T) string {
+	if structRef == nil {
+		return "nil"
+	}
+	out := []string{"{"}
+	obj, err := ToObject(structRef)
+	if err != nil {
+		return "{}"
+	}
+	for k, v := range obj {
+		out = append(out, fmt.Sprintf("  %s: %v", k, v))
+	}
+	out = append(out, "}")
+	return strings.Join(out, "\n")
 }
 
 // Create Object from struct, but only keep given fieldNames
