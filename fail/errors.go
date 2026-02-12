@@ -14,5 +14,6 @@ var (
 	MissingParams   = errors.New("public: Missing required parameters")
 	NotFoundAccount = errors.New("public: Account not found")
 	NotFoundItem    = errors.New("public: Item not found")
+	NotFoundPath    = errors.New("public: Path not found")
 	WrongType       = errors.New("public: Wrong type")
 )
