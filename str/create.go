@@ -61,3 +61,21 @@ func WrapBrackets[T any](items []T) string {
 func WrapParens[T any](items []T) string {
 	return "( " + strings.Join(List(items), ", ") + " )"
 }
+
+type Builder struct {
+	items []string
+}
+
+func NewBuilder() *Builder {
+	return &Builder{
+		items: make([]string, 0),
+	}
+}
+
+func (b *Builder) Add(item string) {
+	b.items = append(b.items, item)
+}
+
+func (b *Builder) Build(separator string) string {
+	return strings.Join(b.items, separator)
+}
