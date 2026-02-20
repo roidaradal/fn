@@ -150,3 +150,9 @@ func IndexMap[T comparable](items []T) map[T]int {
 	}
 	return index
 }
+
+// Get random item from list
+func Random[T any](items []T) T {
+	randomIndex := rand.IntN(len(items))
+	return items[randomIndex]
+}
