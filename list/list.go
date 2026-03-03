@@ -7,6 +7,10 @@ import (
 	"slices"
 )
 
+type number interface {
+	~uint | ~int | ~float32 | ~float64
+}
+
 // Return list length
 func Length[T any](items []T) int {
 	return len(items)
@@ -24,7 +28,7 @@ func Copy[T any](items []T) []T {
 }
 
 // Computes sum of items
-func Sum[T ~uint | ~int | ~float32 | ~float64](items []T) T {
+func Sum[T number](items []T) T {
 	var sum T = 0
 	for _, item := range items {
 		sum += item
@@ -32,8 +36,17 @@ func Sum[T ~uint | ~int | ~float32 | ~float64](items []T) T {
 	return sum
 }
 
+// Computes sum of mapped items
+func SumOf[T any, V number](items []T, convert func(T) V) V {
+	var sum V = 0
+	for _, item := range items {
+		sum += convert(item)
+	}
+	return sum
+}
+
 // Computes product of items
-func Product[T ~uint | ~int | ~float32 | ~float64](items []T) T {
+func Product[T number](items []T) T {
 	var product T = 1
 	for _, item := range items {
 		product *= item
