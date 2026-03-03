@@ -117,3 +117,13 @@ func GroupBy[T any, K comparable](items []T, keyFn func(T) K) map[K][]T {
 	}
 	return group
 }
+
+// Group items using the key function, and map the item using the value function
+func GroupByFunc[T, V any, K comparable](items []T, keyFn func(T) K, valueFn func(T) V) map[K][]V {
+	group := make(map[K][]V)
+	for _, item := range items {
+		key := keyFn(item)
+		group[key] = append(group[key], valueFn(item))
+	}
+	return group
+}
