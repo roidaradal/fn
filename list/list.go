@@ -95,6 +95,15 @@ func TallyItems[T comparable](items []T) map[T]int {
 	return count
 }
 
+// Tally the number of occurences of each item in the list, using the keyFn
+func TallyFunc[T any, K comparable](items []T, keyFn func(T) K) map[K]int {
+	count := make(map[K]int)
+	for _, item := range items {
+		count[keyFn(item)] += 1
+	}
+	return count
+}
+
 // Count the number of occurences of given value in the list
 func Count[T comparable](items []T, value T) int {
 	count := 0
