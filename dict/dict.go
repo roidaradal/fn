@@ -119,3 +119,15 @@ func GetListRef[T any](obj Object, key string) []*T {
 	}
 	return listRef
 }
+
+// Creates a converter function that maps the key to the associated value,
+// Panics if key not found
+func LookupKey[K comparable, V any](items map[K]V) func(K) V {
+	return func(key K) V {
+		value, ok := items[key]
+		if !ok {
+			panic("key not found")
+		}
+		return value
+	}
+}

@@ -178,3 +178,14 @@ func Random[T any](items []T) T {
 	randomIndex := rand.IntN(len(items))
 	return items[randomIndex]
 }
+
+// Creates a converter function that maps the index to the list value,
+// Panics on invalid index
+func LookupIndex[T any](items []T) func(int) T {
+	return func(index int) T {
+		if index >= len(items) || index < 0 {
+			panic("invalid index")
+		}
+		return items[index]
+	}
+}

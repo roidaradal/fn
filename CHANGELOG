@@ -1,3 +1,7 @@
+v0.5.74 - Lookup Functions 
+    X Commit: 2026-03-04 08:03
+    x list.LookupIndex
+    x dict.LookupKey
 v0.5.73 - list.SumOf 
     x Commit: 2026-03-04 07:56
     x list.SumOf
