@@ -39,3 +39,9 @@ func ExtractDate(datetime string) string {
 	}
 	return strings.Fields(datetime)[0]
 }
+
+// Extracts year-month from datetime string
+func ExtractYearMonth(datetime string) string {
+	date := ExtractDate(datetime)
+	return date[0:7] // yyyy-mm
+}
