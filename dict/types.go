@@ -7,15 +7,16 @@ type Entry[K comparable, V any] struct {
 }
 
 type (
-	Object                = map[string]any
-	UintMap               = map[string]uint
-	IntMap                = map[string]int
-	BoolMap               = map[string]bool
-	StringMap             = map[string]string
-	StringListMap         = map[string][]string
-	StringCounter         = map[string]int
-	IntCounter            = map[int]int
-	Counter[T comparable] = map[T]int
+	Object                      = map[string]any
+	UintMap                     = map[string]uint
+	IntMap                      = map[string]int
+	BoolMap                     = map[string]bool
+	StringMap                   = map[string]string
+	StringListMap               = map[string][]string
+	StringCounter               = map[string]int
+	IntCounter                  = map[int]int
+	Counter[T comparable]       = map[T]int
+	Lookup[K comparable, V any] = map[K]V
 )
 
 // Create new counter, with each item initialized to count=0
