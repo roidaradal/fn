@@ -14,10 +14,10 @@ type hasCode interface {
 }
 
 type (
-	IDCodeLookup          = map[uint]string // ID => Code lookup
-	CodeIDLookup          = map[string]uint // Code => ID lookup
-	LookupID[T hasID]     = map[uint]T      // ID => Item lookup
-	LookupCode[T hasCode] = map[string]T    // Code => Item lookup
+	IDCodeLookup      = map[uint]string // ID => Code lookup
+	CodeIDLookup      = map[string]uint // Code => ID lookup
+	LookupID[T any]   = map[uint]T      // ID => Item lookup
+	LookupCode[T any] = map[string]T    // Code => Item lookup
 )
 
 // Create new lookup from list of items, using entry function
