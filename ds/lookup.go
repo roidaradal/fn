@@ -21,7 +21,17 @@ type (
 )
 
 // Create new lookup from list of items, using entry function
-func NewLookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[K]V {
+func NewLookupPlain[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[K]V {
+	lookup := make(map[K]V, len(items))
+	for _, item := range items {
+		k, v := entry(item)
+		lookup[k] = v
+	}
+	return lookup
+}
+
+// Create new lookup from list of ref items, using entry function
+func NewLookup[T any, K comparable, V any](items []*T, entry func(*T) (K, V)) map[K]V {
 	lookup := make(map[K]V, len(items))
 	for _, item := range items {
 		k, v := entry(item)
@@ -31,7 +41,7 @@ func NewLookup[T any, K comparable, V any](items []T, entry func(T) (K, V)) map[
 }
 
 // Create new IDCodeLookup from list of items
-func NewIDCodeLookup[T identifiable](items []T) IDCodeLookup {
+func NewIDCodeLookupPlain[T identifiable](items []T) IDCodeLookup {
 	lookup := make(IDCodeLookup)
 	for _, item := range items {
 		lookup[item.GetID()] = item.GetCode()
@@ -39,8 +49,20 @@ func NewIDCodeLookup[T identifiable](items []T) IDCodeLookup {
 	return lookup
 }
 
+// Create new IDCodeLookup from list of ref items
+func NewIDCodeLookup[T identifiable](items []*T) IDCodeLookup {
+	lookup := make(IDCodeLookup)
+	for _, item := range items {
+		if item == nil {
+			continue
+		}
+		lookup[(*item).GetID()] = (*item).GetCode()
+	}
+	return lookup
+}
+
 // Create new CodeIDLookup from list of items
-func NewCodeIDLookup[T identifiable](items []T) CodeIDLookup {
+func NewCodeIDLookupPlain[T identifiable](items []T) CodeIDLookup {
 	lookup := make(CodeIDLookup)
 	for _, item := range items {
 		lookup[item.GetCode()] = item.GetID()
@@ -48,8 +70,20 @@ func NewCodeIDLookup[T identifiable](items []T) CodeIDLookup {
 	return lookup
 }
 
+// Create new CodeIDLookup from list of ref items
+func NewCodeIDLookup[T identifiable](items []*T) CodeIDLookup {
+	lookup := make(CodeIDLookup)
+	for _, item := range items {
+		if item == nil {
+			continue
+		}
+		lookup[(*item).GetCode()] = (*item).GetID()
+	}
+	return lookup
+}
+
 // Create new LookupID from list of items
-func NewLookupID[T hasID](items []T) LookupID[T] {
+func NewLookupIDPlain[T hasID](items []T) LookupID[T] {
 	lookup := make(LookupID[T])
 	for _, item := range items {
 		lookup[item.GetID()] = item
@@ -57,11 +91,35 @@ func NewLookupID[T hasID](items []T) LookupID[T] {
 	return lookup
 }
 
+// Create new LookupID from list of ref items
+func NewLookupID[T hasID](items []*T) LookupID[*T] {
+	lookup := make(LookupID[*T])
+	for _, item := range items {
+		if item == nil {
+			continue
+		}
+		lookup[(*item).GetID()] = item
+	}
+	return lookup
+}
+
 // Create new LookupCode from list of items
-func NewLookupCode[T hasCode](items []T) LookupCode[T] {
+func NewLookupCodePlain[T hasCode](items []T) LookupCode[T] {
 	lookup := make(LookupCode[T])
 	for _, item := range items {
 		lookup[item.GetCode()] = item
+	}
+	return lookup
+}
+
+// Create new LookupCode from list of ref items
+func NewLookupCode[T hasCode](items []*T) LookupCode[*T] {
+	lookup := make(LookupCode[*T])
+	for _, item := range items {
+		if item == nil {
+			continue
+		}
+		lookup[(*item).GetCode()] = item
 	}
 	return lookup
 }
