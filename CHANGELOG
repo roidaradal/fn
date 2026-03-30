@@ -1,3 +1,6 @@
+v0.6.0 - Rename Package 
+    x Commit: 2026-03-30 14:16
+    x Rename package to zeroibot/fn
 v0.5.78 - Add ds.Lookup Refs
     x Commit: 2026-03-05 10:30
     x Rename ds.Lookup creators to Plain 

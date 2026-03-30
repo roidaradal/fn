@@ -3,7 +3,7 @@ package comb
 import (
 	"iter"
 
-	"github.com/roidaradal/fn/list"
+	"github.com/zeroibot/fn/list"
 )
 
 // Create an iterator for the Cartesian product of given domains

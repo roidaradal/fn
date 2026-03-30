@@ -1,4 +1,4 @@
-module github.com/roidaradal/fn
+module github.com/zeroibot/fn
 
 go 1.25.0
 

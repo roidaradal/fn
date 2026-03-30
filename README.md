@@ -1,7 +1,7 @@
 # fn
 A collection of commonly-used functions, patterns, and shortcuts for Go.
 
-`go get github.com/roidaradal/fn/...`
+`go get github.com/zeroibot/fn/...`
 
 ## check 
 The **check** package contains validation / checker functions (**Boolean** output).
@@ -30,6 +30,9 @@ The **ds** package contains useful data structures:
 
 ## dyn 
 The **dyn** (dynamic) package contains shortcuts for common `reflect` package steps.
+
+## fail 
+The **fail** package contains common error messages.
 
 ## hash 
 The **hash** package contains password hashing functions (using `bcrypt`).

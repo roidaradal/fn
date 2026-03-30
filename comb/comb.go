@@ -4,7 +4,7 @@ package comb
 import (
 	"iter"
 
-	"github.com/roidaradal/fn/list"
+	"github.com/zeroibot/fn/list"
 	"gonum.org/v1/gonum/stat/combin"
 )
 

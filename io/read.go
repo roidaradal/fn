@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/roidaradal/fn/list"
-	"github.com/roidaradal/fn/str"
+	"github.com/zeroibot/fn/list"
+	"github.com/zeroibot/fn/str"
 )
 
 // Read string contents of given text file path

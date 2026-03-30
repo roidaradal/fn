@@ -3,7 +3,7 @@ package io
 import (
 	"os"
 
-	"github.com/roidaradal/fn/str"
+	"github.com/zeroibot/fn/str"
 )
 
 // Save string to given file path

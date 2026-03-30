@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/roidaradal/fn/list"
-	"github.com/roidaradal/fn/str"
+	"github.com/zeroibot/fn/list"
+	"github.com/zeroibot/fn/str"
 )
 
 type (

@@ -1,8 +1,8 @@
 package ds
 
 import (
-	"github.com/roidaradal/fn/list"
-	"github.com/roidaradal/fn/str"
+	"github.com/zeroibot/fn/list"
+	"github.com/zeroibot/fn/str"
 )
 
 // Struct for list of items
